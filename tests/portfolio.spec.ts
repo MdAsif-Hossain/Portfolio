@@ -85,11 +85,15 @@ test('loading feedback and email copy work without a backend', async ({ page, co
     if (['fetch', 'xhr'].includes(request.resourceType())) apiCalls.push(request.url());
   });
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+  // A fake clock holds the ~2 s playback still, so the running state can't finish before it's
+  // checked on a slow machine.
+  await page.clock.install();
   await page.goto('/');
   await expect(page.locator('.empty-output')).toContainText('Choose a question');
   await page.getByRole('button', { name: 'Why hire Asif?' }).click();
   await expect(page.locator('.output-heading')).toContainText('Running…');
   await expect(page.getByRole('button', { name: 'Run portfolio workflow' })).toBeDisabled();
+  await page.clock.runFor(3000);
   await expect(page.locator('.agent-result')).toContainText('Engineering depth. Research mindset.');
   expect(apiCalls).toEqual([]);
   await page.getByRole('button', { name: 'Copy email address' }).click();
@@ -152,4 +156,47 @@ test('WCAG accessibility scan passes on desktop and mobile', async ({ page }) =>
     .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
     .analyze();
   expect(mobile.violations).toEqual([]);
+});
+
+test('project screenshots open in an accessible gallery with keyboard navigation', async ({
+  page,
+}) => {
+  await page.goto('/');
+  const cover = page.getByRole('button', { name: 'View 3 AgriBot screenshots' });
+  await cover.click();
+  const dialog = page.getByRole('dialog');
+  await expect(dialog).toContainText('1 / 3');
+  await page.keyboard.press('ArrowRight');
+  await expect(dialog).toContainText('2 / 3');
+  await expect
+    .poll(() =>
+      dialog.locator('figure img').evaluate((img) => (img as HTMLImageElement).naturalWidth),
+    )
+    .toBeGreaterThan(0);
+  await page.keyboard.press('ArrowLeft');
+  await page.keyboard.press('ArrowLeft');
+  await expect(dialog).toContainText('3 / 3');
+  const scan = await new AxeBuilder({ page }).include('.gallery-dialog').analyze();
+  expect(scan.violations).toEqual([]);
+  await page.keyboard.press('Escape');
+  await expect(dialog).not.toBeVisible();
+  await expect(cover).toBeFocused();
+});
+
+test('Bengali questions get Bengali answers, and contact links carry a subject', async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+  await page.getByRole('button', { name: /আসিফ কে/ }).click();
+  await expect(page.locator('.agent-result h4')).toHaveText('আসিফের পরিচয়।');
+  await expect(page.locator('.agent-result')).toContainText('About Asif');
+  await expect(page.locator('.follow-ups button')).toHaveCount(3);
+  await page.locator('.follow-ups button').first().click();
+  await expect(page.locator('.agent-result h4')).toHaveAttribute('lang', 'bn');
+  await expect(page.getByRole('link', { name: /AI engineering roles/ })).toHaveAttribute(
+    'href',
+    'mailto:asifhossain8612@gmail.com?subject=AI%20engineering%20opportunity',
+  );
+  await expect(page.locator('.contact-clock')).toContainText('in Dhaka');
 });

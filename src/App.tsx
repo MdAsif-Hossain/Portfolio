@@ -5,22 +5,26 @@ import {
   ArrowDownLeft,
   ArrowRight,
   ArrowUpRight,
-  AudioLines,
-  Bot,
   Box,
   BrainCircuit,
+  Briefcase,
   Check,
   CheckCheck,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  Clock,
   Code2,
   Copy,
   Cpu,
   Database,
   FileCheck2,
   FileText,
+  FlaskConical,
   GitBranch,
   Github,
   GraduationCap,
+  Images,
   Layers3,
   Linkedin,
   Menu,
@@ -31,9 +35,9 @@ import {
   RotateCcw,
   Search,
   ShieldCheck,
-  Sparkles,
   Terminal,
   Trophy,
+  WifiOff,
   X,
 } from 'lucide-react';
 import { answerQuestion, type AgentResult } from './agent';
@@ -78,6 +82,16 @@ function External({
     </a>
   );
 }
+
+const isBengali = (text: string) => /[ঀ-৿]/.test(text);
+const suggestions: { text: string; lang?: string; note?: string }[] = [
+  { text: 'Why hire Asif?' },
+  { text: 'Show me his agentic AI work' },
+  { text: 'What research has he published?' },
+  { text: 'What’s his tech stack?' },
+  { text: 'Who is Asif?' },
+  { text: 'আসিফ কে?', lang: 'bn', note: 'Ask in Bangla' },
+];
 
 function AgentPlayground({ onStage }: { onStage: (stage: number) => void }) {
   const [question, setQuestion] = useState('');
@@ -124,6 +138,7 @@ function AgentPlayground({ onStage }: { onStage: (stage: number) => void }) {
     };
     timer.current = setTimeout(advance, reduced ? 60 : 430);
   }
+  const bengali = result?.language === 'bn';
 
   return (
     <section id="playground" className="section playground-section">
@@ -164,13 +179,10 @@ function AgentPlayground({ onStage }: { onStage: (stage: number) => void }) {
               to know about me?
             </h3>
             <div className="suggestions">
-              {[
-                'Why hire Asif?',
-                'Show me his agentic AI work',
-                'What research has he published?',
-              ].map((text) => (
-                <button key={text} disabled={running} onClick={() => run(text)}>
+              {suggestions.map(({ text, lang, note }) => (
+                <button key={text} lang={lang} disabled={running} onClick={() => run(text)}>
                   {text}
+                  {note && <small lang="en">{note}</small>}
                   <ArrowUpRight size={14} />
                 </button>
               ))}
@@ -194,14 +206,15 @@ function AgentPlayground({ onStage }: { onStage: (stage: number) => void }) {
                 disabled={running}
                 maxLength={300}
                 autoComplete="off"
-                placeholder="Ask about RAG, projects, research…"
+                placeholder="Ask about skills, projects, research… or in বাংলা"
               />
               <button aria-label="Run portfolio workflow" disabled={running} type="submit">
                 {running ? <RotateCcw size={18} className="spin" /> : <ArrowRight size={20} />}
               </button>
             </form>
             <p className="demo-note">
-              <ShieldCheck size={14} /> Real BM25 search. Template-based answers.
+              <ShieldCheck size={14} /> Real BM25 search. Template-based answers in English or
+              Bengali.
               <br />
               Runs locally in your browser; no LLM or API calls.
             </p>
@@ -270,30 +283,70 @@ function AgentPlayground({ onStage }: { onStage: (stage: number) => void }) {
                   <CheckCheck size={14} />{' '}
                   {result.weak ? 'Evidence limit reached' : 'Portfolio sources found'}
                 </span>
-                <h4>{result.title}</h4>
+                <h4 lang={bengali ? 'bn' : undefined}>{result.title}</h4>
                 {result.weak ? (
-                  <p>
-                    Try asking about my projects, AI engineering, or research. For anything else,{' '}
-                    <a href={`mailto:${email}`}>ask me directly</a>.
-                  </p>
+                  bengali ? (
+                    <p lang="bn">
+                      আমার প্রজেক্ট, দক্ষতা বা গবেষণা নিয়ে জিজ্ঞেস করুন। অন্য কিছু জানতে চাইলে{' '}
+                      <a href={`mailto:${email}`}>সরাসরি লিখুন</a>।
+                    </p>
+                  ) : (
+                    <p>
+                      Try asking about my projects, skills, or research. For anything else,{' '}
+                      <a href={`mailto:${email}`}>ask me directly</a>.
+                    </p>
+                  )
                 ) : (
-                  <ul>
-                    {result.sources.map((source) => (
-                      <li key={source.id}>
-                        <a
-                          href={source.href}
-                          {...(source.href.startsWith('http')
-                            ? { target: '_blank', rel: 'noopener noreferrer' }
-                            : {})}
-                        >
-                          {source.title}
-                          <ArrowUpRight size={13} />
-                        </a>
-                        <p>{source.summary}</p>
-                      </li>
-                    ))}
-                  </ul>
+                  <>
+                    {bengali && (
+                      <p lang="bn" className="lang-note">
+                        সূত্রগুলোর সারাংশ ইংরেজিতে দেওয়া হলো।
+                      </p>
+                    )}
+                    <ul>
+                      {result.sources.map((source) => (
+                        <li key={source.id} className={source.image ? 'has-thumb' : undefined}>
+                          {source.image && (
+                            <img
+                              src={asset(source.image)}
+                              alt=""
+                              width={76}
+                              height={48}
+                              loading="lazy"
+                            />
+                          )}
+                          <div>
+                            <a
+                              href={source.href}
+                              {...(source.href.startsWith('http')
+                                ? { target: '_blank', rel: 'noopener noreferrer' }
+                                : {})}
+                            >
+                              {source.title}
+                              <ArrowUpRight size={13} />
+                            </a>
+                            <p>{source.summary}</p>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
                 )}
+                <div className="suggestions follow-ups">
+                  <span lang={bengali ? 'bn' : undefined}>
+                    {bengali ? 'এরপর জিজ্ঞেস করুন' : 'Ask next'}
+                  </span>
+                  {result.followUps.map((text) => (
+                    <button
+                      key={text}
+                      lang={isBengali(text) ? 'bn' : undefined}
+                      onClick={() => run(text)}
+                    >
+                      {text}
+                      <ArrowUpRight size={14} />
+                    </button>
+                  ))}
+                </div>
                 <details className="trace-details">
                   <summary>
                     Inspect execution details <ChevronDown size={14} />
@@ -317,99 +370,6 @@ function AgentPlayground({ onStage }: { onStage: (stage: number) => void }) {
   );
 }
 
-function ProjectArtwork({ type }: { type: 'agribot' | 'attest' | 'ewu' }) {
-  if (type === 'agribot')
-    return (
-      <div className="project-art art-agribot" aria-hidden="true">
-        <div className="art-grid" />
-        <span className="art-caption">
-          <span className="status-dot" /> Offline intelligence
-        </span>
-        <div className="agribot-flow">
-          <div className="flow-node">
-            <FileText size={20} />
-            <span>Knowledge</span>
-          </div>
-          <div className="flow-connector" />
-          <div className="flow-core">
-            <Bot size={36} strokeWidth={1.25} />
-            <span>AgriBot</span>
-            <small>LangGraph agent</small>
-          </div>
-          <div className="flow-connector" />
-          <div className="flow-node">
-            <AudioLines size={21} />
-            <span>বাংলা / EN</span>
-          </div>
-        </div>
-        <div className="art-bottom">
-          <span>
-            <Database size={12} /> Retrieval grounded
-          </span>
-          <span>
-            4 GB VRAM <Check size={12} />
-          </span>
-        </div>
-      </div>
-    );
-  if (type === 'attest')
-    return (
-      <div className="project-art art-attest" aria-hidden="true">
-        <div className="art-grid" />
-        <span className="art-caption">
-          <FileCheck2 size={14} /> Document intelligence
-        </span>
-        <div className="document-demo">
-          <div className="document-top">
-            <span>INVOICE</span>
-            <span>#INV-024</span>
-          </div>
-          <div className="document-lines">
-            <i />
-            <i />
-          </div>
-          <div className="extracted-row">
-            <span>Total amount</span>
-            <b>৳ 12,500.00</b>
-            <Check size={12} />
-          </div>
-          <div className="extracted-row">
-            <span>Invoice date</span>
-            <b>Source linked</b>
-            <Check size={12} />
-          </div>
-          <div className="review-row">
-            <ShieldCheck size={12} /> Evidence attached to every field
-          </div>
-        </div>
-      </div>
-    );
-  return (
-    <div className="project-art art-ewu" aria-hidden="true">
-      <div className="art-grid" />
-      <span className="art-caption">
-        <Trophy size={14} /> Hackathon winner
-      </span>
-      <div className="policy-demo">
-        <div className="policy-question">
-          <span>Q</span> What does the university policy say?
-        </div>
-        <div className="policy-answer">
-          <Sparkles size={18} />
-          <div>
-            <i />
-            <i />
-            <i />
-            <span>
-              <FileText size={11} /> Retrieved from policy documents
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 const projects = [
   {
     id: 'agribot',
@@ -426,6 +386,23 @@ const projects = [
     tags: ['LangGraph', 'Qwen2.5', 'FastAPI'],
     role: 'Team lead · 4-person capstone',
     href: `${github}/Agri_bot_capstone_project`,
+    badge: 'Offline intelligence',
+    badgeIcon: WifiOff,
+    shots: [
+      {
+        src: 'agribot-home.webp',
+        caption: 'Home screen: ask in Bengali or English, or upload a photo of a leaf.',
+      },
+      {
+        src: 'agribot-bengali-question.webp',
+        caption: 'A question asked in Bengali, answered with page-level citations to the manuals.',
+      },
+      {
+        src: 'agribot-photo-diagnosis.webp',
+        caption:
+          'Photo upload: the CNN classifier flags brown spot and the answer comes in Bengali.',
+      },
+    ],
   },
   {
     id: 'attest',
@@ -442,6 +419,24 @@ const projects = [
     tags: ['FastAPI', 'PostgreSQL', 'React'],
     role: 'Solo build · Document intelligence',
     href: `${github}/Attest`,
+    badge: 'Document intelligence',
+    badgeIcon: FileCheck2,
+    shots: [
+      {
+        src: 'attest-queue.webp',
+        caption: 'Document queue: every invoice is ready, queried, approved or unreadable.',
+      },
+      {
+        src: 'attest-review.webp',
+        caption:
+          'Review: the total doesn’t match subtotal plus tax, so the field is flagged, not guessed.',
+      },
+      {
+        src: 'attest-approved.webp',
+        caption:
+          'Approved invoice: extracted values, a balanced reconciliation and an audit trail.',
+      },
+    ],
   },
   {
     id: 'ewu',
@@ -458,12 +453,116 @@ const projects = [
     tags: ['LangChain', 'Vector search', 'Python'],
     role: 'Team lead · LLM innovation challenge',
     href: `${github}/EWU-AI-Engine-Policy-Assistant`,
+    badge: 'Hackathon winner',
+    badgeIcon: Trophy,
+    shots: [
+      {
+        src: 'ewu-chat.webp',
+        caption: 'A policy answer, with the agent’s routing and retrieval steps shown alongside.',
+      },
+      {
+        src: 'ewu-workflow.webp',
+        caption:
+          'Workflow: chunking, embeddings, a vector database and reranking feed a local Qwen 2.5 model.',
+      },
+    ],
   },
 ] as const;
+type Project = (typeof projects)[number];
+
+function ProjectGallery({
+  gallery,
+  onChange,
+}: {
+  gallery: { project: Project; index: number } | null;
+  onChange: (gallery: { project: Project; index: number } | null) => void;
+}) {
+  const dialog = useRef<HTMLDialogElement>(null);
+  const open = gallery !== null;
+  useEffect(() => {
+    if (!open) {
+      dialog.current?.close();
+      return;
+    }
+    dialog.current?.showModal();
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [open]);
+  const shots = gallery?.project.shots ?? [];
+  const show = (index: number) =>
+    gallery && onChange({ ...gallery, index: (index + shots.length) % shots.length });
+  const shot = gallery ? shots[gallery.index] : null;
+  return (
+    <dialog
+      ref={dialog}
+      className="certificate-dialog gallery-dialog"
+      aria-labelledby="gallery-title"
+      onCancel={() => onChange(null)}
+      onClick={(event) => {
+        if (event.target === event.currentTarget) onChange(null);
+      }}
+      onKeyDown={(event) => {
+        if (!gallery) return;
+        if (event.key === 'ArrowRight') show(gallery.index + 1);
+        if (event.key === 'ArrowLeft') show(gallery.index - 1);
+      }}
+    >
+      <button
+        className="dialog-close"
+        onClick={() => onChange(null)}
+        aria-label="Close screenshots"
+      >
+        <X size={20} />
+      </button>
+      {gallery && shot && (
+        <>
+          <h3 id="gallery-title">
+            {gallery.project.title}
+            <span>
+              {gallery.index + 1} / {shots.length}
+            </span>
+          </h3>
+          <figure>
+            <img
+              src={asset(`projects/${shot.src}`)}
+              alt={`${gallery.project.title} screenshot: ${shot.caption}`}
+            />
+            <figcaption aria-live="polite">{shot.caption}</figcaption>
+          </figure>
+          <div className="gallery-nav">
+            <button onClick={() => show(gallery.index - 1)} aria-label="Previous screenshot">
+              <ChevronLeft size={18} />
+            </button>
+            <div className="gallery-thumbs">
+              {shots.map((item, i) => (
+                <button
+                  key={item.src}
+                  onClick={() => show(i)}
+                  aria-label={`Screenshot ${i + 1} of ${shots.length}`}
+                  aria-current={i === gallery.index}
+                >
+                  <img src={asset(`projects/${item.src}`)} alt="" loading="lazy" />
+                </button>
+              ))}
+            </div>
+            <button onClick={() => show(gallery.index + 1)} aria-label="Next screenshot">
+              <ChevronRight size={18} />
+            </button>
+          </div>
+          <External href={gallery.project.href}>View the code on GitHub</External>
+        </>
+      )}
+    </dialog>
+  );
+}
 
 function Projects() {
   const initialFilter = () => new URLSearchParams(window.location.search).get('work') || 'All work';
   const [filter, setFilter] = useState(initialFilter);
+  const [gallery, setGallery] = useState<{ project: Project; index: number } | null>(null);
   useEffect(() => {
     const update = () => setFilter(initialFilter());
     const revealProject = () => {
@@ -527,7 +626,26 @@ function Projects() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
             >
-              <ProjectArtwork type={p.id} />
+              <button
+                type="button"
+                className="project-art project-cover"
+                onClick={() => setGallery({ project: p, index: 0 })}
+                aria-label={`View ${p.shots.length} ${p.title} screenshots`}
+              >
+                <img
+                  src={asset(`projects/${p.id}-cover.webp`)}
+                  alt=""
+                  width={900}
+                  height={500}
+                  loading="lazy"
+                />
+                <span className="art-caption">
+                  <p.badgeIcon size={12} /> {p.badge}
+                </span>
+                <span className="shot-count">
+                  <Images size={12} /> {p.shots.length} screenshots
+                </span>
+              </button>
               <div className="project-info">
                 <div className="project-title">
                   <h3>{p.title}</h3>
@@ -566,6 +684,7 @@ function Projects() {
         ¹ Attest: 211 evaluated fields. Metrics reflect the project evaluations documented in this
         portfolio.
       </p>
+      <ProjectGallery gallery={gallery} onChange={setGallery} />
       <div className="more-builds">
         <span>Also on the workbench</span>
         <External href={`${github}/ArticleAI`}>
@@ -858,6 +977,45 @@ function About() {
   );
 }
 
+const contactReasons = [
+  {
+    icon: Briefcase,
+    title: 'AI engineering roles',
+    text: 'Agentic AI, retrieval and LLM engineering on real products.',
+    subject: 'AI engineering opportunity',
+  },
+  {
+    icon: FlaskConical,
+    title: 'Research collaboration',
+    text: 'Evaluation, Bengali NLP and AI for low-resource settings.',
+    subject: 'Research collaboration',
+  },
+  {
+    icon: GraduationCap,
+    title: 'Graduate study',
+    text: 'Programs and labs working on applied, trustworthy AI.',
+    subject: 'Graduate study',
+  },
+];
+const dhakaTime = new Intl.DateTimeFormat('en-US', {
+  timeZone: 'Asia/Dhaka',
+  hour: 'numeric',
+  minute: '2-digit',
+});
+
+function DhakaClock() {
+  const [time, setTime] = useState(() => dhakaTime.format(new Date()));
+  useEffect(() => {
+    const id = setInterval(() => setTime(dhakaTime.format(new Date())), 30_000);
+    return () => clearInterval(id);
+  }, []);
+  return (
+    <span className="contact-clock">
+      <Clock size={14} /> {time} in Dhaka (GMT+6)
+    </span>
+  );
+}
+
 function Contact() {
   const [copied, setCopied] = useState(false);
   const [copyError, setCopyError] = useState(false);
@@ -898,6 +1056,18 @@ function Contact() {
           <ArrowUpRight size={50} strokeWidth={1.4} />
         </a>
       </div>
+      <div className="contact-reasons">
+        {contactReasons.map(({ icon: Icon, title, text, subject }) => (
+          <a key={title} href={`mailto:${email}?subject=${encodeURIComponent(subject)}`}>
+            <Icon size={22} strokeWidth={1.5} />
+            <strong>{title}</strong>
+            <span>{text}</span>
+            <small>
+              Email me about this <ArrowUpRight size={12} />
+            </small>
+          </a>
+        ))}
+      </div>
       <div className="contact-bottom">
         <div className="email-group">
           <a href={`mailto:${email}`}>{email}</a>
@@ -908,9 +1078,14 @@ function Contact() {
             {copied ? 'Copied!' : copyError ? 'Select the email to copy it.' : ''}
           </span>
         </div>
+        <DhakaClock />
         <div>
-          <External href="https://www.linkedin.com/in/md-asif-hossain20/">LinkedIn</External>
-          <External href={github}>GitHub</External>
+          <External href="https://www.linkedin.com/in/md-asif-hossain20/">
+            <Linkedin size={15} /> LinkedIn
+          </External>
+          <External href={github}>
+            <Github size={15} /> GitHub
+          </External>
           <External href="https://huggingface.co/Sabuktagin">Hugging Face</External>
         </div>
       </div>
@@ -961,7 +1136,8 @@ export default function App() {
           <nav id="main-nav" aria-label="Main navigation" className={menuOpen ? 'open' : ''}>
             {[
               ['Work', '#projects'],
-              ['Expertise', '#expertise'],
+              ['Skills', '#expertise'],
+              ['Ask me', '#playground'],
               ['Research', '#publications'],
               ['About', '#about'],
             ].map(([title, link]) => (
@@ -1163,7 +1339,7 @@ export default function App() {
             <div className="section-intro">
               <div>
                 <p className="eyebrow">
-                  <Cpu size={15} /> What I bring
+                  <Cpu size={15} /> Skills & expertise
                 </p>
                 <h2>
                   The whole system.

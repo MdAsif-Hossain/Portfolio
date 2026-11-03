@@ -6,6 +6,7 @@ export type Document = {
   agentScore: number;
   text: string;
   summary: string;
+  image?: string;
 };
 
 // Knowledge base the portfolio agent retrieves from.
@@ -20,6 +21,7 @@ export const KB: Document[] = [
     text: 'AgriBot offline bilingual Bengali English agentic RAG agriculture chatbot capstone. LangGraph agent reasoning, tool routing, PDF ingestion, vector indexing, vector database, retrieval augmented generation, Qwen2.5 LLM, GPU optimised inference 8.5x faster than CPU, runs on 4 GB VRAM consumer hardware, FastAPI backend, TypeScript interface. Team lead of 4.',
     summary:
       'LangGraph agentic RAG assistant for farmers, fully offline on 4 GB of VRAM, 8.5× faster than CPU. Asif led a team of 4.',
+    image: 'projects/agribot-cover.webp',
   },
   {
     id: 'attest',
@@ -30,6 +32,7 @@ export const KB: Document[] = [
     text: 'Attest verified document data extraction invoices production backend FastAPI PostgreSQL Redis SQLAlchemy React TypeScript PyMuPDF LLM APIs Anthropic OpenAI Gemini. Confidence score, source text, human review, human in the loop, deterministic validation layer, reliability, trustworthy. 97.2% field accuracy 211 fields, 6 of 6 injected errors caught, 317 ms per document, 276 tests 80% coverage, testing. Solo project.',
     summary:
       'Invoice extraction with evidence for every value: 97.2% field accuracy, 6 of 6 injected errors caught, 276 tests. Solo.',
+    image: 'projects/attest-cover.webp',
   },
   {
     id: 'ewu',
@@ -40,6 +43,37 @@ export const KB: Document[] = [
     text: 'EWU AI Engine university policy assistant RAG open source LLMs LangChain FastAPI PDF ingestion semantic vector search agent like query routing. Hackathon champion 1st place LLM-based AI Engine Development Innovation Challenge EWU Robotic Club. Team lead of 3. Winner award.',
     summary:
       'RAG policy assistant with agent-like query routing. Won 1st place at the EWU Robotic Club LLM challenge, Asif as team lead.',
+    image: 'projects/ewu-cover.webp',
+  },
+  {
+    id: 'about',
+    title: 'About Asif',
+    href: '#about',
+    kind: 'profile',
+    agentScore: 0,
+    text: 'About Md. Asif Hossain bio background. Final-year CSE student and undergraduate researcher at East West University in Dhaka, Bangladesh. Builds AI where the constraints are real: limited hardware, unreliable internet, and low-resource languages like Bengali. Offline agents for Bengali-speaking farmers, document systems that show their evidence, and research that tests whether an improvement holds up.',
+    summary:
+      'Final-year CSE student and undergraduate researcher at East West University in Dhaka, building AI for limited hardware, unreliable internet and low-resource languages.',
+  },
+  {
+    id: 'skills',
+    title: 'Skills and tech stack',
+    href: '#expertise',
+    kind: 'profile',
+    agentScore: 0,
+    text: 'Skills tech stack tools expertise. Agentic systems: LangGraph, LangChain, tool calling, n8n, agentic RAG. Retrieval and LLMs: BM25, BGE-M3, FAISS, reranking, LoRA, PEFT, Qwen2.5. Engineering and delivery: Python, FastAPI, PostgreSQL, Redis, Docker, React, TypeScript. Evaluation and research: PyTorch, TensorFlow, Hugging Face, OpenCV, statistical testing.',
+    summary:
+      'Agentic systems (LangGraph, LangChain, n8n), retrieval and LLMs (BM25, BGE-M3, FAISS, LoRA), engineering (Python, FastAPI, PostgreSQL, Docker, React) and evaluation (PyTorch, Hugging Face).',
+  },
+  {
+    id: 'education',
+    title: 'Education',
+    href: '#about',
+    kind: 'profile',
+    agentScore: 0,
+    text: 'Education university degree. B.Sc. in Computer Science and Engineering, CSE, at East West University, expected December 2026. Final-year student doing undergraduate research with Dr. Farhana Huq.',
+    summary:
+      'B.Sc. in Computer Science & Engineering at East West University, expected December 2026, with undergraduate research under Dr. Farhana Huq.',
   },
   {
     id: 'articleai',

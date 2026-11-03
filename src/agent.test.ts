@@ -29,3 +29,46 @@ test('unknown, blank and markup input never invent an answer', () => {
     assert.equal(result.sources.length, 0);
   }
 });
+test('first questions a visitor asks are answered from profile documents', () => {
+  for (const [question, id] of [
+    ['What’s his tech stack?', 'skills'],
+    ['Does he know Python?', 'skills'],
+    ['Who is Asif?', 'about'],
+    ['Where did he study?', 'education'],
+    ['How can I contact him?', 'contact'],
+  ]) {
+    const result = answerQuestion(question);
+    assert.equal(result.weak, false, question);
+    assert.ok(
+      result.sources.some((source) => source.id === id),
+      `${question} should cite ${id}`,
+    );
+  }
+});
+test('Bengali questions are routed and answered with a Bengali title', () => {
+  const result = answerQuestion('আসিফ কে?');
+  assert.equal(result.language, 'bn');
+  assert.equal(result.weak, false);
+  assert.ok(result.sources.some((source) => source.id === 'about'));
+  assert.match(result.title, /[ঀ-৿]/);
+  assert.ok(result.followUps.every((text) => /[ঀ-৿]/.test(text)));
+});
+test('both Unicode spellings of a Bengali letter reach the same route', () => {
+  const precomposed = answerQuestion('আসিফ কোথায় পড়াশোনা করছে?');
+  const decomposed = answerQuestion('আসিফ কোথায় পড়াশোনা করছে?');
+  for (const result of [precomposed, decomposed])
+    assert.ok(result.sources.some((source) => source.id === 'education'));
+});
+test('follow-up suggestions lead to answers, not dead ends', () => {
+  const asked = new Set<string>();
+  const queue = [...answerQuestion('Why hire Asif?').followUps];
+  while (queue.length) {
+    const question = queue.shift()!;
+    if (asked.has(question)) continue;
+    asked.add(question);
+    const result = answerQuestion(question);
+    assert.equal(result.weak, false, `“${question}” should have an answer`);
+    queue.push(...result.followUps);
+  }
+  assert.ok(asked.size >= 8);
+});
