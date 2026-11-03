@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Md. Asif Hossain | Agentic AI Engineer</title>
+  <meta name="description" content="Md. Asif Hossain, agentic AI engineer from Dhaka. I design and ship AI agents that plan, retrieve, call tools and check their own work. Give my portfolio agent a goal and watch it think.">
+  <meta property="og:title" content="Md. Asif Hossain | Agentic AI Engineer">
+  <meta property="og:description" content="AI agents that plan, retrieve, call tools and check their own work. Give my portfolio agent a goal and watch it think.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/img/og.jpg">
+  <meta name="theme-color" content="#0b1026">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip" href="#about">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="#top" aria-label="Md. Asif Hossain, back to top">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="4"/><circle cx="5" cy="7" r="2.4"/><circle cx="27" cy="8" r="2.4"/><circle cx="6" cy="25" r="2.4"/><circle cx="26" cy="25" r="2.4"/><path d="M7 8.5l6 5M25 9.5l-6 4M8 23.5l5-4.5M24 23.5l-5-4.5"/></svg>
+        <span>Asif Hossain</span>
+      </a>
+      <button class="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
+      <nav id="nav" aria-label="Sections">
+        <a href="#agent">Agent</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#publications">Publications</a>
+        <a href="#certifications">Certifications</a>
+        <a href="#achievements">Achievements</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- HERO + AGENT PLAYGROUND -->
+    <section class="hero" id="agent" aria-labelledby="hero-name">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="hero-kicker">Agentic AI Engineer, Dhaka</p>
+          <h1 id="hero-name">Md. Asif Hossain</h1>
+          <p class="hero-thesis">I design and ship AI agents: systems that plan, retrieve, call tools and check their own work. From an offline Bengali farming assistant on a 4 GB GPU to document AI that flags what it isn't sure about.</p>
+          <ul class="proof" aria-label="Highlights">
+            <li><strong>2</strong> first-author IEEE papers</li>
+            <li><strong>2</strong> arXiv preprints</li>
+            <li><strong>1st</strong> place, LLM hackathon</li>
+            <li>Springer Nature reviewer</li>
+          </ul>
+          <div class="hero-actions">
+            <a class="btn btn-sun" href="#console">Run my agent</a>
+            <a class="btn btn-ghost" href="#projects">See projects</a>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <canvas id="graph3d"></canvas>
+          <div id="graph-labels"></div>
+        </div>
+      </div>
+
+      <!-- The creative feature: Agent Playground -->
+      <div class="wrap">
+        <div class="console" id="console">
+          <div class="console-head">
+            <div>
+              <h2 class="console-title">Give my agent a goal</h2>
+              <p class="console-sub">A small agent that lives in this page. It plans, searches my portfolio, calls tools and checks its own answer. Watch the graph above light up as it works.</p>
+            </div>
+            <span class="status" data-status>Idle</span>
+          </div>
+
+          <div class="goals" role="group" aria-label="Example goals">
+            <button class="goal" data-goal="Why should I hire Asif as an AI engineer?">Why hire Asif?</button>
+            <button class="goal" data-goal="Show me his best agentic AI project">Best agentic project</button>
+            <button class="goal" data-goal="Can he ship LLM apps to production?">Production-ready?</button>
+            <button class="goal" data-goal="What research has he published?">Publications</button>
+            <button class="goal" data-goal="Tell me something surprising about his work">Surprise me</button>
+          </div>
+
+          <form class="ask" autocomplete="off">
+            <label class="sr-only" for="goal-input">Your goal for the agent</label>
+            <input id="goal-input" name="goal" maxlength="160" placeholder="Or type your own, e.g. does he know RAG?">
+            <button class="btn btn-sun" type="submit">Run agent</button>
+          </form>
+
+          <div class="run" hidden>
+            <ol class="pipeline" aria-hidden="true">
+              <li data-node="planner">planner</li><li data-node="memory">memory</li><li data-node="retriever">retriever</li><li data-node="tools">tools</li><li data-node="llm">llm</li><li data-node="critic">critic</li><li data-node="agent">answer</li>
+            </ol>
+            <ol class="trace" aria-label="Agent trace"></ol>
+            <div class="answer" aria-live="polite" hidden></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section">
+      <div class="wrap about-grid">
+        <div class="about-photo">
+          <img src="assets/img/asif.jpg" width="250" height="250" alt="Portrait of Md. Asif Hossain">
+        </div>
+        <div class="about-text">
+          <h2>About me</h2>
+          <p class="lead">I'm a final-year Computer Science &amp; Engineering student at East West University in Dhaka, graduating in December 2026, and an undergraduate researcher in the CSE department under Dr. Farhana Huq.</p>
+          <p>I build agents for places where things are hard. Bengali is one of the world's most spoken languages, yet it is low-resource for AI. Farmers need advice where the internet is unreliable. Businesses need data pulled from messy, half-handwritten invoices. So my systems are small enough to run anywhere and honest enough to trust: an offline agentic RAG assistant that fits in 4 GB of VRAM, a hackathon-winning policy assistant, and an extraction pipeline that shows its evidence for every value.</p>
+          <p>I care about evaluation that holds up. My latest paper uses significance testing to show how data leakage inflates reported accuracy in solar fault detection. Off the keyboard, I've volunteered with As-Sunnah Foundation during the Bangladesh floods, packing emergency food relief for affected families.</p>
+          <dl class="facts">
+            <div><dt>Focus</dt><dd>AI agents, agentic RAG, LLM engineering, Bengali NLP</dd></div>
+            <div><dt>Education</dt><dd>B.Sc. in CSE, East West University (2022 to Dec 2026)</dd></div>
+            <div><dt>Languages</dt><dd>Bengali (native), English (B2)</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="section section-alt">
+      <div class="wrap">
+        <h2>Tech superpowers</h2>
+        <p class="section-intro">Grouped by what I build with them, with the projects where each one shipped.</p>
+        <div class="skills-grid">
+          <article class="skill skill-lead">
+            <h3>Agents and orchestration</h3>
+            <p class="chips">LangGraph, LangChain, tool calling, agentic RAG, multi-step planning, n8n workflows</p>
+            <p class="used">Shipped in AgriBot, EWU AI Engine, ArticleAI</p>
+          </article>
+          <article class="skill">
+            <h3>LLM engineering</h3>
+            <p class="chips">RAG, vector databases, FAISS, prompt engineering, Qwen2.5, Llama 3.3, OpenAI, Anthropic and Gemini APIs, Groq</p>
+            <p class="used">Shipped in Attest, AgriBot, LinkedIn Post Generator</p>
+          </article>
+          <article class="skill">
+            <h3>Search and retrieval</h3>
+            <p class="chips">BGE-M3, BM25, reciprocal rank fusion, cross-encoder reranking, semantic search</p>
+            <p class="used">Shipped in Kaggle legal retrieval (rank 75 of 550+)</p>
+          </article>
+          <article class="skill">
+            <h3>Production backend</h3>
+            <p class="chips">Python, FastAPI, REST APIs, PostgreSQL, Redis, SQLAlchemy, Docker, Git, automated testing</p>
+            <p class="used">Shipped in Attest (276 tests), AgriBot</p>
+          </article>
+          <article class="skill">
+            <h3>Deep learning, NLP and vision</h3>
+            <p class="chips">PyTorch, TensorFlow, Hugging Face Transformers, PEFT / LoRA, NLLB-200, EfficientNet, CBAM, OpenCV</p>
+            <p class="used">Shipped in AgriBanglaT5, HybridSolarNet</p>
+          </article>
+          <article class="skill">
+            <h3>Data, web and cloud</h3>
+            <p class="chips">Pandas, NumPy, Matplotlib, Seaborn, Selenium, JavaScript, TypeScript, React, Three.js, AWS Amplify</p>
+            <p class="used">Shipped in AI Web Scraper, Attest, this site</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="section">
+      <div class="wrap">
+        <h2>Projects</h2>
+        <p class="section-intro">Built end to end, measured, and on GitHub.</p>
+
+        <div class="projects">
+          <article class="project project-lead" id="p-agribot">
+            <div class="project-head">
+              <h3>AgriBot</h3>
+              <p class="role">Team lead, 4 people, final-year capstone</p>
+            </div>
+            <p>A fully offline, bilingual (Bengali–English) agentic RAG assistant for farmers. A LangGraph agent decides how to answer each question, a PDF ingestion and vector-indexing pipeline grounds it in agricultural documents, and GPU-optimised Qwen2.5 inference keeps it fast on consumer hardware.</p>
+            <ul class="metrics">
+              <li><strong>4 GB</strong> VRAM is enough</li>
+              <li><strong>8.5×</strong> faster than CPU</li>
+              <li><strong>100%</strong> offline</li>
+            </ul>
+            <p class="stack">Python, LangChain, LangGraph, FastAPI, vector database, Qwen2.5, TypeScript</p>
+            <p class="links"><a href="https://github.com/MdAsif-Hossain/Agri_bot_capstone_project" target="_blank" rel="noopener">Code on GitHub</a></p>
+          </article>
+
+          <article class="project" id="p-attest">
+            <div class="project-head">
+              <h3>Attest</h3>
+              <p class="role">Solo project</p>
+            </div>
+            <p>Verified data extraction from invoices. Every value comes with a confidence score, the source text and its location. Uncertain values go to human review instead of failing silently, and a deterministic validation layer catches dropped rows, misread prices and invented tax IDs.</p>
+            <ul class="metrics">
+              <li><strong>97.2%</strong> field accuracy</li>
+              <li><strong>6 of 6</strong> injected errors caught</li>
+              <li><strong>317 ms</strong> per document</li>
+              <li><strong>276</strong> tests, 80% coverage</li>
+            </ul>
+            <p class="stack">FastAPI, PostgreSQL, Redis, SQLAlchemy, React, TypeScript, PyMuPDF, LLM APIs</p>
+            <p class="links"><a href="https://github.com/MdAsif-Hossain/Attest" target="_blank" rel="noopener">Code on GitHub</a></p>
+          </article>
+
+          <article class="project" id="p-ewu">
+            <div class="project-head">
+              <h3>EWU AI Engine</h3>
+              <p class="role">Team lead, 3 people, 1st place</p>
+            </div>
+            <p>A university policy assistant built on open-source LLMs, with a PDF ingestion pipeline, semantic vector search and agent-like query routing. Won the LLM-based AI Engine Development Innovation Challenge at EWU Robotic Club.</p>
+            <p class="stack">Python, LangChain, FastAPI, vector database, open-source LLMs</p>
+            <p class="links"><a href="https://github.com/MdAsif-Hossain/EWU-AI-Engine-Policy-Assistant" target="_blank" rel="noopener">Code on GitHub</a></p>
+          </article>
+
+          <article class="project" id="p-t5">
+            <div class="project-head">
+              <h3>AgriBanglaT5 and AgriEnBn</h3>
+              <p class="role">First author, team of 5</p>
+            </div>
+            <p>BanglaT5 (247M parameters) fine-tuned with LoRA to translate farming advice into Bengali without mangling domain terms. I built the 3,232-pair AgriEnBn corpus from legacy Bijoy-encoded government PDFs, NLLB-200 back-translation and LaBSE filtering.</p>
+            <ul class="metrics">
+              <li><strong>+6.1</strong> chrF++ (54.2)</li>
+              <li><strong>81.8%</strong> term accuracy</li>
+              <li><strong>93.1%</strong> negation faithfulness</li>
+            </ul>
+            <p class="stack">PyTorch, Hugging Face Transformers, PEFT / LoRA, NLLB-200, LaBSE</p>
+            <p class="links">
+              <a href="https://huggingface.co/Sabuktagin/AgriBanglaT5" target="_blank" rel="noopener">Model on Hugging Face</a>
+              <a href="https://github.com/MdAsif-Hossain/Bangla-T5-tune" target="_blank" rel="noopener">Code on GitHub</a>
+            </p>
+          </article>
+
+          <article class="project" id="p-solar">
+            <div class="project-head">
+              <h3>HybridSolarNet</h3>
+              <p class="role">First author, research</p>
+            </div>
+            <p>A lightweight, explainable EfficientNet-CBAM model for real-time solar panel fault detection, designed to run where heavy models can't.</p>
+            <p class="stack">PyTorch, EfficientNet, CBAM attention, explainability</p>
+            <p class="links"><a href="https://arxiv.org/abs/2601.02928" target="_blank" rel="noopener">Read on arXiv</a></p>
+          </article>
+        </div>
+
+        <h3 class="subhead">More builds</h3>
+        <ul class="mini-projects">
+          <li><a href="https://github.com/MdAsif-Hossain/ArticleAI" target="_blank" rel="noopener">ArticleAI</a><span>Agentic workflow: an async FastAPI backend hands work to n8n, which runs Llama 3.3 70B on Groq, logs to Google Sheets and emails HTML reports.</span></li>
+          <li><a href="https://www.kaggle.com/competitions/llm-agentic-legal-information-retrieval/leaderboard" target="_blank" rel="noopener">Kaggle: LLM Agentic Legal Information Retrieval</a><span>Solo. Hybrid BGE-M3 + BM25 retrieval, RRF fusion, cross-encoder reranking and multi-hop citation chaining. Ranked 75 of 550+ teams.</span></li>
+          <li><a href="https://github.com/MdAsif-Hossain/LinkedIn-post-generator" target="_blank" rel="noopener">LinkedIn Post Generator</a><span>LangChain LCEL chain with Groq and OpenAI providers, multiple tones and languages, Streamlit UI.</span></li>
+          <li><a href="https://github.com/MdAsif-Hossain/AI-web-Scraper" target="_blank" rel="noopener">AI Web Scraper</a><span>Selenium automation plus LLM-based HTML parsing to pull structured JSON and CSV from JavaScript-heavy sites.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PUBLICATIONS -->
+    <section id="publications" class="section section-alt">
+      <div class="wrap">
+        <h2>Publications</h2>
+        <p class="section-intro">First author on all four.</p>
+        <ol class="pubs">
+          <li class="pub">
+            <p class="venue"><span class="tag tag-ieee">IEEE</span> i-COSTE 2026, accepted, to appear in IEEE Xplore</p>
+            <h3>Data Leakage and the Limits of Attention: A Significance-Tested Benchmark for Solar Panel Fault Detection</h3>
+            <p class="authors"><b>Md. Asif Hossain</b>, Nabil Subhan, Mantasha Rahman Mahi, Jannatul Ferdous Nabila, Farhana Huq</p>
+          </li>
+          <li class="pub">
+            <p class="venue"><span class="tag tag-ieee">IEEE</span> COMPAS 2026, accepted, to appear in IEEE Xplore</p>
+            <h3>An English–Bengali Agricultural Parallel Corpus: Construction and Safety-Aware Evaluation</h3>
+            <p class="authors"><b>Md. Asif Hossain</b>, Nabil Subhan, Mantasha Rahman, Jannatul Ferdous Nabila, Farhana Huq</p>
+          </li>
+          <li class="pub">
+            <p class="venue"><span class="tag">arXiv</span> Preprint, January 2026</p>
+            <h3><a href="https://arxiv.org/abs/2601.02065" target="_blank" rel="noopener">Cost-Efficient Cross-Lingual Retrieval-Augmented Generation for Low-Resource Languages: A Case Study in Bengali Agricultural Advisory</a></h3>
+            <p class="authors"><b>Md. Asif Hossain</b>, Nabil Subhan, Mantasha Rahman Mahi, Jannatul Ferdous Nabila</p>
+          </li>
+          <li class="pub">
+            <p class="venue"><span class="tag">arXiv</span> Preprint, January 2026</p>
+            <h3><a href="https://arxiv.org/abs/2601.02928" target="_blank" rel="noopener">HybridSolarNet: A Lightweight and Explainable EfficientNet-CBAM Architecture for Real-Time Solar Panel Fault Detection</a></h3>
+            <p class="authors"><b>Md. Asif Hossain</b>, G M Mota-Tahrin Tayef, Nabil Subhan</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- CERTIFICATIONS -->
+    <section id="certifications" class="section">
+      <div class="wrap">
+        <h2>Certifications</h2>
+        <p class="section-intro">Each one links to its verification or the certificate itself.</p>
+        <div class="certs">
+          <article class="cert">
+            <button class="cert-thumb" data-cert="assets/img/cert-ostad.jpg" aria-label="View AI Engineering Bootcamp certificate"><img src="assets/img/cert-ostad.jpg" alt="" loading="lazy" width="900" height="636"></button>
+            <h3>AI Engineering Bootcamp</h3>
+            <p>Ostad, Batch 5, Aug 2026. LLM apps, RAG, LangChain, LangGraph, FastAPI. Certificate ID C46932</p>
+            <button class="text-link" data-cert="assets/img/cert-ostad.jpg">View certificate</button>
+          </article>
+          <article class="cert">
+            <button class="cert-thumb" data-cert="assets/img/cert-ml.jpg" aria-label="View Machine Learning Specialization certificate"><img src="assets/img/cert-ml.jpg" alt="" loading="lazy" width="880" height="680"></button>
+            <h3>Machine Learning Specialization</h3>
+            <p>DeepLearning.AI and Stanford Online, Sep 2025</p>
+            <a href="https://coursera.org/verify/specialization/KQ8UEJW7OHWO" target="_blank" rel="noopener">Verify on Coursera</a>
+          </article>
+          <article class="cert">
+            <button class="cert-thumb" data-cert="assets/img/cert-gda.jpg" aria-label="View Google Data Analytics certificate"><img src="assets/img/cert-gda.jpg" alt="" loading="lazy" width="880" height="680"></button>
+            <h3>Google Data Analytics Professional Certificate</h3>
+            <p>Google, Oct 2024</p>
+            <a href="https://coursera.org/verify/professional-cert/2ZF06XQSNIVK" target="_blank" rel="noopener">Verify on Coursera</a>
+          </article>
+          <article class="cert cert-plain">
+            <h3>ITEE IT Passport (IP)</h3>
+            <p>Information Technology Engineers Examination, ITPEC and BD-ITEC, Oct 2025</p>
+          </article>
+          <article class="cert cert-plain">
+            <h3>Springer Nature Reviewer Certificate</h3>
+            <p>For peer review of a manuscript for the journal <i>World Wide Web</i>, Oct 2026</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACHIEVEMENTS -->
+    <section id="achievements" class="section section-alt">
+      <div class="wrap">
+        <h2>Achievements</h2>
+        <ol class="timeline">
+          <li><time>Oct 2026</time><div><h3>Peer reviewer, <i>World Wide Web</i> (Springer Nature)</h3><p>Reviewed a manuscript for an international journal while still an undergraduate.</p></div></li>
+          <li><time>2026</time><div><h3>Two first-author IEEE conference papers accepted</h3><p>COMPAS 2026 (Bengali agricultural corpus) and i-COSTE 2026 (solar fault detection benchmark).</p></div></li>
+          <li><time>Sep 2026</time><div><h3>Selected for GCI World 2026</h3><p>Data science program by the Matsuo-Iwasawa Laboratory, University of Tokyo.</p></div></li>
+          <li><time>Jun 2026</time><div><h3>Rank 75 of 550+ teams, Kaggle</h3><p>LLM Agentic Legal Information Retrieval, competing solo.</p></div></li>
+          <li><time>Jan 2026</time><div><h3>1st place, LLM-based AI Engine Development Innovation Challenge</h3><p>EWU Robotic Club, East West University. Led a team of 3 to build EWU AI Engine.</p></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section contact">
+      <div class="wrap">
+        <h2>Let's build agents together</h2>
+        <p class="lead">I'm open to AI engineering roles, research collaborations and graduate study. The fastest way to reach me is email.</p>
+        <div class="contact-actions">
+          <a class="btn btn-sun" href="mailto:asifhossain8612@gmail.com">Email me</a>
+          <a class="btn btn-ghost" href="https://www.linkedin.com/in/md-asif-hossain20/" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn btn-ghost" href="https://github.com/MdAsif-Hossain" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn btn-ghost" href="https://huggingface.co/Sabuktagin" target="_blank" rel="noopener">Hugging Face</a>
+        </div>
+        <p class="email-line">asifhossain8612@gmail.com</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><p>Built by Md. Asif Hossain. Hosted on AWS Amplify.</p></div>
+  </footer>
+
+  <!-- Persistent hint for the creative feature -->
+  <a class="agent-fab" href="#console">
+    <span class="fab-dot" aria-hidden="true"></span>
+    <span class="fab-text"><b>Ask my agent</b><small>Watch it plan and call tools</small></span>
+  </a>
+
+  <dialog class="cert-dialog" aria-label="Certificate">
+    <img alt="Certificate">
+    <button class="btn btn-ghost" data-cert-close>Close</button>
+  </dialog>
+
+  <script src="js/main.js" defer></script>
+  <script src="js/kb.js" defer></script>
+  <script src="js/agent.js" defer></script>
+  <script type="module" src="js/graph3d.js"></script>
+</body>
+</html>

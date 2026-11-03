@@ -1,0 +1,8 @@
+node_modules
+dist
+artifacts
+legacy
+vendor
+js
+css
+package-lock.json
