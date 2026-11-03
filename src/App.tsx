@@ -1,4 +1,13 @@
-import { Component, lazy, Suspense, useEffect, useRef, useState, type ReactNode } from 'react';
+import {
+  Component,
+  lazy,
+  Suspense,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type ReactNode,
+} from 'react';
 import { motion, MotionConfig, useInView, useReducedMotion } from 'motion/react';
 import {
   ArrowDown,
@@ -14,6 +23,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Clock,
+  Cloud,
   Code2,
   Copy,
   Cpu,
@@ -35,11 +45,23 @@ import {
   RotateCcw,
   Search,
   ShieldCheck,
+  Sparkles,
   Terminal,
   Trophy,
   WifiOff,
   X,
 } from 'lucide-react';
+import {
+  siDocker,
+  siFastapi,
+  siHuggingface,
+  siLangchain,
+  siLanggraph,
+  siPostgresql,
+  siPython,
+  siPytorch,
+  type SimpleIcon,
+} from 'simple-icons';
 import { answerQuestion, type AgentResult } from './agent';
 
 const AgentScene = lazy(() => import('./AgentScene'));
@@ -683,30 +705,114 @@ const skills = [
     icon: BrainCircuit,
     title: 'Agentic systems',
     description: 'From a user goal to a reliable sequence of actions.',
-    tags: ['LangGraph', 'LangChain', 'Tool calling', 'n8n', 'Agentic RAG'],
+    tags: [
+      'LangGraph',
+      'LangChain',
+      'Tool calling',
+      'Agentic RAG',
+      'Multi-step planning',
+      'n8n workflows',
+    ],
     proof: 'AgriBot, EWU AI Engine, ArticleAI',
   },
   {
-    icon: Search,
-    title: 'Retrieval & LLMs',
+    icon: Sparkles,
+    title: 'LLM engineering',
     description: 'Give language models the context they actually need.',
-    tags: ['BM25 + BGE-M3', 'FAISS', 'Reranking', 'LoRA / PEFT', 'Qwen2.5'],
-    proof: 'Kaggle legal retrieval, AgriBanglaT5',
+    tags: [
+      'RAG',
+      'Prompt engineering',
+      'Vector databases',
+      'FAISS',
+      'Qwen2.5',
+      'Llama 3.3',
+      'OpenAI API',
+      'Anthropic API',
+      'Gemini API',
+      'Groq',
+    ],
+    proof: 'Attest, AgriBot, LinkedIn Post Generator',
+  },
+  {
+    icon: Search,
+    title: 'Search & retrieval',
+    description: 'Find the right evidence before the model answers.',
+    tags: [
+      'BM25',
+      'BGE-M3',
+      'Reciprocal rank fusion',
+      'Cross-encoder reranking',
+      'Semantic search',
+    ],
+    proof: 'Kaggle legal retrieval: 75 of 550+ teams',
   },
   {
     icon: Layers3,
     title: 'Engineering & delivery',
     description: 'Build the system around the model, all the way through.',
-    tags: ['Python', 'FastAPI', 'PostgreSQL', 'Redis', 'Docker', 'React'],
+    tags: [
+      'Python',
+      'FastAPI',
+      'REST APIs',
+      'PostgreSQL',
+      'Redis',
+      'SQLAlchemy',
+      'Docker',
+      'Git',
+      'Automated testing',
+    ],
     proof: 'Attest: 276 tests, 80% coverage',
   },
   {
     icon: ShieldCheck,
-    title: 'Evaluation & research',
-    description: 'Measure carefully. Make uncertainty visible.',
-    tags: ['PyTorch', 'TensorFlow', 'Hugging Face', 'OpenCV', 'Statistical testing'],
-    proof: 'Two accepted IEEE papers, two preprints',
+    title: 'Deep learning & research',
+    description: 'Train and fine-tune models. Measure them honestly.',
+    tags: [
+      'PyTorch',
+      'TensorFlow',
+      'Hugging Face Transformers',
+      'LoRA / PEFT',
+      'NLLB-200',
+      'EfficientNet',
+      'CBAM',
+      'OpenCV',
+      'Statistical testing',
+    ],
+    proof: 'Two accepted IEEE papers, AgriBanglaT5',
   },
+  {
+    icon: Cloud,
+    title: 'Data, web & cloud',
+    description: 'Clean the data, build the interface, ship it.',
+    tags: [
+      'Pandas',
+      'NumPy',
+      'Matplotlib',
+      'Seaborn',
+      'Selenium',
+      'JavaScript',
+      'TypeScript',
+      'React',
+      'Three.js',
+      'AWS Amplify',
+    ],
+    proof: 'AI Web Scraper, Attest, this site',
+  },
+];
+
+const brand = (icon: SimpleIcon) => ({ name: icon.title, color: `#${icon.hex}`, path: icon.path });
+
+// Logos come from Simple Icons. It has no AWS marks, so Amplify gets a plain cloud in AWS orange.
+const stack: { name: string; color: string; path?: string }[] = [
+  brand(siLanggraph),
+  brand(siLangchain),
+  brand(siPython),
+  brand(siPytorch),
+  brand(siHuggingface),
+  brand(siFastapi),
+  brand(siPostgresql),
+  brand(siDocker),
+  { name: 'AWS Amplify', color: '#ff9900' },
 ];
 
 function Research() {
@@ -1287,27 +1393,20 @@ export default function App() {
         <div className="stack-strip">
           <span>My working stack</span>
           <div>
-            <span>
-              <GitBranch size={17} /> LangGraph
-            </span>
-            <span>
-              <Network size={17} /> LangChain
-            </span>
-            <span>
-              <Cpu size={17} /> PyTorch
-            </span>
-            <span>
-              <Code2 size={17} /> Python
-            </span>
-            <span>
-              <Layers3 size={17} /> FastAPI
-            </span>
-            <span>
-              <Database size={17} /> PostgreSQL
-            </span>
-            <span>
-              <Box size={17} /> Docker
-            </span>
+            {stack.map((s) => (
+              <span key={s.name} style={{ '--brand': s.color } as CSSProperties}>
+                <span className="stack-logo">
+                  {s.path ? (
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d={s.path} />
+                    </svg>
+                  ) : (
+                    <Cloud size={17} />
+                  )}
+                </span>
+                {s.name}
+              </span>
+            ))}
           </div>
         </div>
         <div className="page-container">

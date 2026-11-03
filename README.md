@@ -10,15 +10,15 @@ Built for the AWS Student Builder Challenge: _Build Your Tech Superpower_ (2026)
 
 ## What's on the site
 
-| Section      | What you'll find                                                                                          |
-| ------------ | --------------------------------------------------------------------------------------------------------- |
-| **Hero**     | Who I am, an interactive 3D "agent core", and quick proof points                                          |
-| **Work**     | AgriBot, Attest and EWU AI Engine, each with real screenshots, metrics and a link to the code             |
-| **Skills**   | Agentic systems, retrieval and LLMs, engineering, and evaluation, each tied to the project that proves it |
-| **Ask me**   | The creative feature (below)                                                                              |
-| **Research** | Two accepted IEEE papers, two arXiv preprints and an open model on Hugging Face                           |
-| **About**    | Background, education, recognition and verifiable certificates                                            |
-| **Contact**  | Email, profiles, and pre-filled emails for roles, research collaboration or graduate study                |
+| Section      | What you'll find                                                                                 |
+| ------------ | ------------------------------------------------------------------------------------------------ |
+| **Hero**     | Who I am, an interactive 3D "agent core", and quick proof points                                 |
+| **Work**     | AgriBot, Attest and EWU AI Engine, each with real screenshots, metrics and a link to the code    |
+| **Skills**   | Six groups, from agents and LLMs to data, web and cloud, each tied to the project that proves it |
+| **Ask me**   | The creative feature (below)                                                                     |
+| **Research** | Two accepted IEEE papers, two arXiv preprints and an open model on Hugging Face                  |
+| **About**    | Background, education, recognition and verifiable certificates                                   |
+| **Contact**  | Email, profiles, and pre-filled emails for roles, research collaboration or graduate study       |
 
 ![Project cards with real screenshots from each repository](docs/projects.jpg)
 

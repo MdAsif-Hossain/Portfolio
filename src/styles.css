@@ -624,14 +624,14 @@ section,
   margin: auto;
   display: flex;
   align-items: center;
-  padding: 23px 70px;
+  padding: 22px 70px;
   border-block: 1px solid var(--line);
   background: #ffffff01;
   gap: 45px;
 }
 .stack-strip > span {
-  font: 9px/1.5 var(--mono);
-  color: var(--subtle);
+  font: 10px/1.5 var(--mono);
+  color: var(--accent);
   white-space: nowrap;
 }
 .stack-strip > div {
@@ -639,18 +639,33 @@ section,
   justify-content: space-between;
   flex: 1;
   align-items: center;
-  gap: 20px;
+  gap: 16px;
 }
 .stack-strip > div > span {
   display: flex;
   align-items: center;
-  gap: 7px;
-  color: #a6b3bc;
+  gap: 9px;
+  color: #d5dee4;
   font-weight: 600;
-  font-size: 12px;
+  font-size: 13px;
+  white-space: nowrap;
 }
-.stack-strip svg {
-  color: #7a8a94;
+/* Each logo sits on a faint tile of its own brand colour, lifted a little so dark blues stay visible. */
+.stack-logo {
+  width: 30px;
+  height: 30px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  color: color-mix(in srgb, var(--brand) 82%, #fff);
+  background: color-mix(in srgb, var(--brand) 13%, transparent);
+  border: 1px solid color-mix(in srgb, var(--brand) 30%, transparent);
+  box-shadow: 0 0 20px -6px color-mix(in srgb, var(--brand) 50%, transparent);
+}
+.stack-logo svg {
+  width: 16px;
+  height: 16px;
 }
 
 /* Project case studies and native vector artwork. */
@@ -968,16 +983,19 @@ section,
 /* Expertise and interactive portfolio retrieval. */
 .expertise-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 56px;
 }
 .expertise-grid article {
+  display: flex;
+  flex-direction: column;
   border-right: 1px solid #ffffff12;
-  padding: 5px 25px;
+  padding: 5px 32px;
 }
-.expertise-grid article:first-child {
+.expertise-grid article:nth-child(3n + 1) {
   padding-left: 0;
 }
-.expertise-grid article:last-child {
+.expertise-grid article:nth-child(3n) {
   border: 0;
   padding-right: 0;
 }
@@ -1010,6 +1028,7 @@ section,
   margin-top: 22px;
   min-height: 55px;
   align-content: start;
+  flex: 1;
 }
 .skill-tags span {
   font: 8px/1.8 var(--mono);
@@ -1892,6 +1911,30 @@ section,
     height: 450px;
   }
 }
+/* Nine logos stop fitting beside the label below about 1366px. */
+@media (max-width: 1365px) {
+  .stack-strip {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding-inline: 40px;
+  }
+  .stack-strip > div {
+    width: 100%;
+  }
+  .stack-strip > div > span {
+    gap: 8px;
+    font-size: 12px;
+  }
+  .stack-logo {
+    width: 28px;
+    height: 28px;
+  }
+  .stack-logo svg {
+    width: 15px;
+    height: 15px;
+  }
+}
 @media (max-width: 1100px) {
   .header-inner {
     padding-inline: 32px;
@@ -1936,18 +1979,11 @@ section,
   .button-secondary {
     font-size: 10px;
   }
-  .stack-strip {
-    padding-inline: 40px;
-    gap: 25px;
-  }
-  .stack-strip > div > span {
-    font-size: 10px;
-  }
   .stack-strip > div {
-    gap: 13px;
-  }
-  .stack-strip > div > span > svg {
-    width: 14px;
+    display: grid;
+    grid-template-columns: repeat(5, max-content);
+    justify-content: space-between;
+    gap: 14px 16px;
   }
   .project-grid {
     gap: 14px;
@@ -2093,17 +2129,22 @@ section,
   }
   .stack-strip {
     padding: 21px 28px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
   }
-  .stack-strip > div {
-    width: 100%;
-    gap: 12px;
-    flex-wrap: wrap;
+  .stack-strip > div > span {
+    gap: 7px;
+    font-size: 11px;
+  }
+  .stack-logo {
+    width: 26px;
+    height: 26px;
+    border-radius: 7px;
+  }
+  .stack-logo svg {
+    width: 14px;
+    height: 14px;
   }
   .stack-strip > span {
-    font-size: 8px;
+    font-size: 9px;
   }
   .section {
     padding-block: 75px;
@@ -2166,14 +2207,16 @@ section,
     grid-template-columns: 1fr 1fr;
     gap: 30px 0;
   }
-  .expertise-grid article:nth-child(2) {
-    border: 0;
+  .expertise-grid article:nth-child(n) {
+    border-right: 1px solid #ffffff12;
+    padding-inline: 18px;
   }
-  .expertise-grid article:nth-child(3) {
+  .expertise-grid article:nth-child(odd) {
     padding-left: 0;
   }
-  .expertise-grid article:nth-child(4) {
-    padding-left: 18px;
+  .expertise-grid article:nth-child(even) {
+    border: 0;
+    padding-right: 0;
   }
   .skill-tags {
     min-height: 30px;
@@ -2494,15 +2537,12 @@ section,
     gap: 14px;
   }
   .stack-strip > div {
-    justify-content: flex-start;
-    column-gap: 23px;
-    row-gap: 14px;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 14px 10px;
   }
   .stack-strip > div > span {
-    font-size: 10px;
-  }
-  .stack-strip > div > span > svg {
-    width: 14px;
+    white-space: normal;
+    line-height: 1.3;
   }
   .page-container {
     padding: 0 23px;
@@ -2611,11 +2651,14 @@ section,
   .expertise-grid {
     gap: 32px 0;
   }
-  .expertise-grid article {
+  .expertise-grid article:nth-child(n) {
     padding: 0 16px;
   }
-  .expertise-grid article:nth-child(4) {
-    padding-left: 16px;
+  .expertise-grid article:nth-child(odd) {
+    padding-left: 0;
+  }
+  .expertise-grid article:nth-child(even) {
+    padding-right: 0;
   }
   .skill-icon {
     width: 40px;

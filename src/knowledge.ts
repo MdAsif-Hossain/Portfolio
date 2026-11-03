@@ -61,9 +61,9 @@ export const KB: Document[] = [
     href: '#expertise',
     kind: 'profile',
     agentScore: 0,
-    text: 'Skills tech stack tools expertise. Agentic systems: LangGraph, LangChain, tool calling, n8n, agentic RAG. Retrieval and LLMs: BM25, BGE-M3, FAISS, reranking, LoRA, PEFT, Qwen2.5. Engineering and delivery: Python, FastAPI, PostgreSQL, Redis, Docker, React, TypeScript. Evaluation and research: PyTorch, TensorFlow, Hugging Face, OpenCV, statistical testing.',
+    text: 'Skills tech stack tools expertise. Agentic systems: LangGraph, LangChain, tool calling, agentic RAG, multi-step planning, n8n workflows. LLM engineering: RAG, prompt engineering, vector databases, FAISS, Qwen2.5, Llama 3.3, OpenAI, Anthropic and Gemini APIs, Groq. Search and retrieval: BM25, BGE-M3, reciprocal rank fusion, cross-encoder reranking, semantic search. Engineering and delivery: Python, FastAPI, REST APIs, PostgreSQL, Redis, SQLAlchemy, Docker, Git, automated testing. Deep learning and research: PyTorch, TensorFlow, Hugging Face Transformers, LoRA, PEFT, NLLB-200, EfficientNet, CBAM, OpenCV, statistical testing. Data, web and cloud: Pandas, NumPy, Matplotlib, Seaborn, Selenium, JavaScript, TypeScript, React, Three.js, AWS Amplify.',
     summary:
-      'Agentic systems (LangGraph, LangChain, n8n), retrieval and LLMs (BM25, BGE-M3, FAISS, LoRA), engineering (Python, FastAPI, PostgreSQL, Docker, React) and evaluation (PyTorch, Hugging Face).',
+      'Agents (LangGraph, LangChain, n8n), LLMs (RAG, Qwen2.5, Llama 3.3), retrieval (BM25, BGE-M3, reranking), engineering (Python, FastAPI, PostgreSQL, Docker), deep learning (PyTorch, Hugging Face) and web and cloud (React, TypeScript, AWS Amplify).',
   },
   {
     id: 'education',
