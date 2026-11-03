@@ -22,23 +22,21 @@ Built for the AWS Student Builder Challenge: _Build Your Tech Superpower_ (2026)
 
 ![Project cards with real screenshots from each repository](docs/projects.jpg)
 
-## Creative feature: ask my portfolio, in English or বাংলা
+## Creative feature: ask my portfolio
 
 My work is about agents that find evidence before they answer. So instead of only describing that, the portfolio does it: visitors ask a question and watch a small retrieval workflow answer from the site's own content.
 
 **How to find it:** the **Run the agent demo** button in the hero, or **Ask me** in the navigation.
 
-![The portfolio answering "আসিফ কে?" (Who is Asif?) in Bengali](docs/ask-me.jpg)
+![The portfolio answering "What's his tech stack?" with cited sources and follow-up questions](docs/ask-me.jpg)
 
 What happens when you ask:
 
-1. **Plan:** the question is routed to a topic (skills, projects, research, education and so on) using English and Bengali patterns.
+1. **Plan:** the question is routed to a topic (skills, projects, research, education and so on).
 2. **Retrieve:** a BM25 search ranks 18 short documents that describe my projects, papers and background.
 3. **Act:** each topic only cites the kinds of document that fit it. For example, research questions cite papers, not projects.
 4. **Verify:** if the question isn't covered, it says _"I don't have enough evidence for that"_ instead of guessing.
 5. **Respond:** an answer built from the cited sources, plus follow-up questions to ask next.
-
-Ask in Bengali, for example _আসিফ কে?_, and the answer and suggestions come back in Bengali. That matters to me because my research is about AI for Bengali speakers.
 
 **What it is not:** this is not an LLM. Everything runs in the visitor's browser with no API calls, no keys and no backend, and the steps are shown so visitors can see exactly what happened. The "Inspect execution details" panel shows the trace for each answer.
 
@@ -88,11 +86,11 @@ npm run preview    # serve the production build at http://localhost:4173
 ## Tests
 
 ```bash
-npm test           # unit tests for search, routing and Bengali input
+npm test           # unit tests for search, routing and follow-up questions
 npm run test:e2e   # builds the site, then runs browser tests in Google Chrome
 ```
 
-The browser tests cover navigation, project filters, the screenshot gallery, the ask-me demo in both languages, the contact links, mobile widths from 320px to 1440px, visitors without WebGL or with reduced motion, and WCAG 2.1 AA accessibility scans. They use your installed Google Chrome. To use another browser, change `channel` in [`playwright.config.ts`](playwright.config.ts).
+The browser tests cover navigation, project filters, the screenshot gallery, the ask-me demo, the contact links, mobile widths from 320px to 1440px, visitors without WebGL or with reduced motion, and WCAG 2.1 AA accessibility scans. They use your installed Google Chrome. To use another browser, change `channel` in [`playwright.config.ts`](playwright.config.ts).
 
 ## Accessibility and performance
 

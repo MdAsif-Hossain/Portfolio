@@ -45,20 +45,6 @@ test('first questions a visitor asks are answered from profile documents', () =>
     );
   }
 });
-test('Bengali questions are routed and answered with a Bengali title', () => {
-  const result = answerQuestion('আসিফ কে?');
-  assert.equal(result.language, 'bn');
-  assert.equal(result.weak, false);
-  assert.ok(result.sources.some((source) => source.id === 'about'));
-  assert.match(result.title, /[ঀ-৿]/);
-  assert.ok(result.followUps.every((text) => /[ঀ-৿]/.test(text)));
-});
-test('both Unicode spellings of a Bengali letter reach the same route', () => {
-  const precomposed = answerQuestion('আসিফ কোথায় পড়াশোনা করছে?');
-  const decomposed = answerQuestion('আসিফ কোথায় পড়াশোনা করছে?');
-  for (const result of [precomposed, decomposed])
-    assert.ok(result.sources.some((source) => source.id === 'education'));
-});
 test('follow-up suggestions lead to answers, not dead ends', () => {
   const asked = new Set<string>();
   const queue = [...answerQuestion('Why hire Asif?').followUps];

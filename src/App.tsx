@@ -83,14 +83,12 @@ function External({
   );
 }
 
-const isBengali = (text: string) => /[ঀ-৿]/.test(text);
-const suggestions: { text: string; lang?: string; note?: string }[] = [
-  { text: 'Why hire Asif?' },
-  { text: 'Show me his agentic AI work' },
-  { text: 'What research has he published?' },
-  { text: 'What’s his tech stack?' },
-  { text: 'Who is Asif?' },
-  { text: 'আসিফ কে?', lang: 'bn', note: 'Ask in Bangla' },
+const suggestions = [
+  'Why hire Asif?',
+  'Show me his agentic AI work',
+  'What research has he published?',
+  'What’s his tech stack?',
+  'Who is Asif?',
 ];
 
 function AgentPlayground({ onStage }: { onStage: (stage: number) => void }) {
@@ -138,7 +136,6 @@ function AgentPlayground({ onStage }: { onStage: (stage: number) => void }) {
     };
     timer.current = setTimeout(advance, reduced ? 60 : 430);
   }
-  const bengali = result?.language === 'bn';
 
   return (
     <section id="playground" className="section playground-section">
@@ -179,10 +176,9 @@ function AgentPlayground({ onStage }: { onStage: (stage: number) => void }) {
               to know about me?
             </h3>
             <div className="suggestions">
-              {suggestions.map(({ text, lang, note }) => (
-                <button key={text} lang={lang} disabled={running} onClick={() => run(text)}>
+              {suggestions.map((text) => (
+                <button key={text} disabled={running} onClick={() => run(text)}>
                   {text}
-                  {note && <small lang="en">{note}</small>}
                   <ArrowUpRight size={14} />
                 </button>
               ))}
@@ -206,15 +202,14 @@ function AgentPlayground({ onStage }: { onStage: (stage: number) => void }) {
                 disabled={running}
                 maxLength={300}
                 autoComplete="off"
-                placeholder="Ask about skills, projects, research… or in বাংলা"
+                placeholder="Ask about skills, projects, research…"
               />
               <button aria-label="Run portfolio workflow" disabled={running} type="submit">
                 {running ? <RotateCcw size={18} className="spin" /> : <ArrowRight size={20} />}
               </button>
             </form>
             <p className="demo-note">
-              <ShieldCheck size={14} /> Real BM25 search. Template-based answers in English or
-              Bengali.
+              <ShieldCheck size={14} /> Real BM25 search. Template-based answers.
               <br />
               Runs locally in your browser; no LLM or API calls.
             </p>
@@ -283,26 +278,14 @@ function AgentPlayground({ onStage }: { onStage: (stage: number) => void }) {
                   <CheckCheck size={14} />{' '}
                   {result.weak ? 'Evidence limit reached' : 'Portfolio sources found'}
                 </span>
-                <h4 lang={bengali ? 'bn' : undefined}>{result.title}</h4>
+                <h4>{result.title}</h4>
                 {result.weak ? (
-                  bengali ? (
-                    <p lang="bn">
-                      আমার প্রজেক্ট, দক্ষতা বা গবেষণা নিয়ে জিজ্ঞেস করুন। অন্য কিছু জানতে চাইলে{' '}
-                      <a href={`mailto:${email}`}>সরাসরি লিখুন</a>।
-                    </p>
-                  ) : (
-                    <p>
-                      Try asking about my projects, skills, or research. For anything else,{' '}
-                      <a href={`mailto:${email}`}>ask me directly</a>.
-                    </p>
-                  )
+                  <p>
+                    Try asking about my projects, skills, or research. For anything else,{' '}
+                    <a href={`mailto:${email}`}>ask me directly</a>.
+                  </p>
                 ) : (
                   <>
-                    {bengali && (
-                      <p lang="bn" className="lang-note">
-                        সূত্রগুলোর সারাংশ ইংরেজিতে দেওয়া হলো।
-                      </p>
-                    )}
                     <ul>
                       {result.sources.map((source) => (
                         <li key={source.id} className={source.image ? 'has-thumb' : undefined}>
@@ -333,15 +316,9 @@ function AgentPlayground({ onStage }: { onStage: (stage: number) => void }) {
                   </>
                 )}
                 <div className="suggestions follow-ups">
-                  <span lang={bengali ? 'bn' : undefined}>
-                    {bengali ? 'এরপর জিজ্ঞেস করুন' : 'Ask next'}
-                  </span>
+                  <span>Ask next</span>
                   {result.followUps.map((text) => (
-                    <button
-                      key={text}
-                      lang={isBengali(text) ? 'bn' : undefined}
-                      onClick={() => run(text)}
-                    >
+                    <button key={text} onClick={() => run(text)}>
                       {text}
                       <ArrowUpRight size={14} />
                     </button>

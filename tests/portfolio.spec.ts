@@ -183,17 +183,17 @@ test('project screenshots open in an accessible gallery with keyboard navigation
   await expect(cover).toBeFocused();
 });
 
-test('Bengali questions get Bengali answers, and contact links carry a subject', async ({
-  page,
-}) => {
+test('profile questions offer follow-ups, and contact links carry a subject', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
-  await page.getByRole('button', { name: /আসিফ কে/ }).click();
-  await expect(page.locator('.agent-result h4')).toHaveText('আসিফের পরিচয়।');
+  await page.getByRole('button', { name: 'Who is Asif?' }).click();
+  await expect(page.locator('.agent-result h4')).toHaveText('Meet Asif.');
   await expect(page.locator('.agent-result')).toContainText('About Asif');
   await expect(page.locator('.follow-ups button')).toHaveCount(3);
-  await page.locator('.follow-ups button').first().click();
-  await expect(page.locator('.agent-result h4')).toHaveAttribute('lang', 'bn');
+  await page.getByRole('button', { name: 'What’s he studying?' }).click();
+  await expect(page.locator('.agent-result h4')).toHaveText(
+    'Final-year CSE at East West University.',
+  );
   await expect(page.getByRole('link', { name: /AI engineering roles/ })).toHaveAttribute(
     'href',
     'mailto:asifhossain8612@gmail.com?subject=AI%20engineering%20opportunity',
