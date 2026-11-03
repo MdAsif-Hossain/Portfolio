@@ -1,84 +1,125 @@
-﻿# Asif Hossain — AI engineering portfolio
+﻿# Asif Hossain — AI Engineer & Researcher
 
-A frontend-only portfolio built with React 19, TypeScript, Vite, React Three Fiber / Three.js, and Motion. The design presents agentic AI work through an interactive 3D system, project case studies, a local retrieval demo, research, and credentials.
+My personal portfolio: agentic AI, retrieval systems and research, presented as a fast, fully static site hosted on **AWS Amplify**.
 
-## Run locally
+**Live site:** _coming soon on AWS Amplify Hosting_
 
-Requires Node.js 22.12+ or a supported newer release (developed with Node 24).
+Built for the AWS Student Builder Challenge: _Build Your Tech Superpower_ (2026).
 
-```powershell
-cd E:\asif-portfolio\portfolio
+![Portfolio home page with the interactive 3D agent core](docs/desktop.jpg)
+
+## What's on the site
+
+| Section      | What you'll find                                                                                          |
+| ------------ | --------------------------------------------------------------------------------------------------------- |
+| **Hero**     | Who I am, an interactive 3D "agent core", and quick proof points                                          |
+| **Work**     | AgriBot, Attest and EWU AI Engine, each with real screenshots, metrics and a link to the code             |
+| **Skills**   | Agentic systems, retrieval and LLMs, engineering, and evaluation, each tied to the project that proves it |
+| **Ask me**   | The creative feature (below)                                                                              |
+| **Research** | Two accepted IEEE papers, two arXiv preprints and an open model on Hugging Face                           |
+| **About**    | Background, education, recognition and verifiable certificates                                            |
+| **Contact**  | Email, profiles, and pre-filled emails for roles, research collaboration or graduate study                |
+
+![Project cards with real screenshots from each repository](docs/projects.jpg)
+
+## Creative feature: ask my portfolio, in English or বাংলা
+
+My work is about agents that find evidence before they answer. So instead of only describing that, the portfolio does it: visitors ask a question and watch a small retrieval workflow answer from the site's own content.
+
+**How to find it:** the **Run the agent demo** button in the hero, or **Ask me** in the navigation.
+
+![The portfolio answering "আসিফ কে?" (Who is Asif?) in Bengali](docs/ask-me.jpg)
+
+What happens when you ask:
+
+1. **Plan:** the question is routed to a topic (skills, projects, research, education and so on) using English and Bengali patterns.
+2. **Retrieve:** a BM25 search ranks 18 short documents that describe my projects, papers and background.
+3. **Act:** each topic only cites the kinds of document that fit it. For example, research questions cite papers, not projects.
+4. **Verify:** if the question isn't covered, it says _"I don't have enough evidence for that"_ instead of guessing.
+5. **Respond:** an answer built from the cited sources, plus follow-up questions to ask next.
+
+Ask in Bengali, for example _আসিফ কে?_, and the answer and suggestions come back in Bengali. That matters to me because my research is about AI for Bengali speakers.
+
+**What it is not:** this is not an LLM. Everything runs in the visitor's browser with no API calls, no keys and no backend, and the steps are shown so visitors can see exactly what happened. The "Inspect execution details" panel shows the trace for each answer.
+
+## AWS architecture
+
+```mermaid
+flowchart LR
+    A[git push to main] --> B[AWS Amplify Hosting<br/>build: npm ci + npm run build]
+    B --> C[Static files in dist/]
+    C --> D[Amazon CloudFront CDN]
+    D --> E[Visitors worldwide]
+```
+
+- **AWS Amplify Hosting** connects to this GitHub repository and rebuilds the site on every push to `main`. The build steps are in [`amplify.yml`](amplify.yml).
+- Amplify serves the built files through **Amazon CloudFront**, its global content delivery network, with HTTPS included.
+- The site is fully static, so there are no servers, databases or API keys to manage.
+
+### Deploy your own copy
+
+1. Fork this repository.
+2. In the AWS Amplify console, choose **Create new app**, then **GitHub**, and select the repository and the `main` branch.
+3. Amplify detects `amplify.yml`. Keep the defaults and choose **Save and deploy**.
+
+## Tech stack
+
+| Area          | Tools                                                               |
+| ------------- | ------------------------------------------------------------------- |
+| UI            | React 19, TypeScript, Vite 7                                        |
+| 3D and motion | Three.js, React Three Fiber, Motion                                 |
+| Search demo   | BM25 ranking written in TypeScript ([`src/agent.ts`](src/agent.ts)) |
+| Testing       | Node test runner, Playwright, axe-core accessibility checks         |
+| Hosting       | AWS Amplify Hosting with Amazon CloudFront                          |
+
+<p align="center"><img src="docs/mobile.jpg" alt="The portfolio on a phone" width="300" /></p>
+
+## Run it locally
+
+You need [Node.js](https://nodejs.org/) 22.12 or newer.
+
+```bash
 npm ci
-npm run dev
+npm run dev        # development server at http://localhost:5173
+npm run build      # production build in dist/
+npm run preview    # serve the production build at http://localhost:4173
 ```
 
-Open the Local URL printed by Vite, normally http://localhost:5173.
+## Tests
 
-```powershell
-npm run build
-npm run preview
+```bash
+npm test           # unit tests for search, routing and Bengali input
+npm run test:e2e   # builds the site, then runs browser tests in Google Chrome
 ```
 
-The production output is `dist/`. It is entirely static. No backend, database, API keys, account setup, or paid service is needed.
+The browser tests cover navigation, project filters, the screenshot gallery, the ask-me demo in both languages, the contact links, mobile widths from 320px to 1440px, visitors without WebGL or with reduced motion, and WCAG 2.1 AA accessibility scans. They use your installed Google Chrome. To use another browser, change `channel` in [`playwright.config.ts`](playwright.config.ts).
 
-## What's interactive
+## Accessibility and performance
 
-- A custom WebGL agent network with a shader-lit core, orbital paths, pointer response, and selectable workflow stages.
-- A motion pause control; the scene also stops when offscreen, when the tab is hidden, and when reduced motion is requested.
-- A visual fallback if WebGL fails, while the rest of the portfolio remains usable.
-- Project filters with URL state and browser history support.
-- A local BM25 portfolio search with an illustrated execution trace, source links, and an explicit unknown-answer state.
-- Native certificate dialogs with keyboard focus restoration, mobile navigation, and email copying with a failure fallback.
+- Works by keyboard, including the gallery (arrow keys and Escape) and the mobile menu.
+- The 3D scene loads separately from the rest of the page, pauses when it's off screen or the tab is hidden, and respects the "reduce motion" setting. If WebGL isn't available, a static image takes its place and the rest of the site works as usual.
+- Project screenshots are WebP images of 25–70 KB, loaded only when they scroll into view.
 
-The portfolio demo is **not a live LLM or autonomous agent**. It executes local retrieval and composes answers from existing source summaries. Stage playback is illustrative; no fabricated timing or independent factual-verification claims are shown.
+## Project structure
 
-## Edit content
-
-| File                      | Purpose                                                                       |
-| ------------------------- | ----------------------------------------------------------------------------- |
-| `src/App.tsx`             | Portfolio sections, project records, publications, credentials, contact links |
-| `src/AgentScene.tsx`      | React Three Fiber scene, geometry, shaders, animation                         |
-| `src/styles.css`          | Design tokens, layout, responsive behavior, reduced-motion styles             |
-| `src/knowledge.ts`        | Documents the portfolio demo retrieves and cites                              |
-| `src/agent.ts`            | Local BM25 scoring, intent routing, evidence checks                           |
-| `public/assets/img/`      | Original portrait, certificates, social image                                 |
-| `public/favicon.svg`      | New brand icon                                                                |
-| `tests/portfolio.spec.ts` | Browser interaction, responsive, fallback and accessibility checks            |
-
-Keep project facts in `App.tsx` and `knowledge.ts` consistent. The metrics and publication statuses come from the supplied portfolio; they were not independently re-evaluated during this redesign. Accepted IEEE papers remain labeled accepted/to appear; arXiv entries remain labeled preprints.
-
-The original HTML is saved in `legacy/index.html`; the original `css/`, `js/`, `vendor/`, and `assets/` are retained for reference. None of those old application scripts are included in the new production bundle. This archive is not a second maintained application.
-
-## Checks and screenshots
-
-```powershell
-npm test
-npm run test:e2e
+```text
+src/
+  App.tsx          page sections and project, skills and contact content
+  AgentScene.tsx   3D agent core
+  agent.ts         question routing and BM25 search for the ask-me demo
+  knowledge.ts     the documents the demo searches and cites
+  styles.css       layout, colors and responsive rules
+public/assets/img/ portrait, certificates and project screenshots
+tests/             Playwright browser tests
+docs/              screenshots used in this README
+amplify.yml        AWS Amplify build settings
 ```
 
-Browser checks use installed Google Chrome through Playwright. If Chrome is unavailable, install it or change the `channel` in `playwright.config.ts` to an installed browser. Tests run against the production build at port 4173.
+To update content, edit [`src/App.tsx`](src/App.tsx) for what's shown on the page and [`src/knowledge.ts`](src/knowledge.ts) for what the ask-me demo can answer. Keep the two consistent.
 
-With the development server running:
+## Contact
 
-```powershell
-npm run capture
-```
-
-Screenshots are written under `artifacts/`. The reviewed design contract and verification scope are recorded in `DESIGN.md` and `VALIDATION.md`.
-
-## Static hosting
-
-`amplify.yml` now runs `npm ci` and `npm run build`, then publishes `dist/`. Set the Amplify app root to this `portfolio` directory if the Git repository contains it as a subdirectory. Any static host that serves `dist/` is also sufficient. No deployment was performed in this task.
-
-## Design and engineering guidance
-
-Applied relevant guidance from [ECC](https://github.com/affaan-m/ECC):
-
-- [Frontend Design Direction](https://github.com/affaan-m/ECC/tree/main/skills/frontend-design-direction): audience, visual hierarchy, responsive states, rendered evidence.
-- [Frontend Patterns](https://github.com/affaan-m/ECC/tree/main/skills/frontend-patterns): component composition, lazy loading, focus management, error boundaries.
-- [React Performance](https://github.com/affaan-m/ECC/tree/main/skills/react-performance): defer heavy scene code, cache geometry, avoid per-frame React state, and keep static assets local.
-- [Verification Loop](https://github.com/affaan-m/ECC/tree/main/skills/verification-loop): distinguish build/test results from production acceptance.
-
-Also consulted [Vercel Web Interface Guidelines](https://github.com/vercel-labs/web-interface-guidelines) and the [Anthropic frontend design skill](https://github.com/anthropics/skills/tree/main/skills/frontend-design).
-
-The small ECC evidence checker is retained at `scripts/vendor/ecc-check-evidence.cjs` with its MIT license. It checks the evidence record's completeness, not visual quality. No ECC hooks, global configuration, or backend services were installed.
+- Email: [asifhossain8612@gmail.com](mailto:asifhossain8612@gmail.com)
+- LinkedIn: [md-asif-hossain20](https://www.linkedin.com/in/md-asif-hossain20/)
+- GitHub: [MdAsif-Hossain](https://github.com/MdAsif-Hossain)
+- Hugging Face: [Sabuktagin](https://huggingface.co/Sabuktagin)
