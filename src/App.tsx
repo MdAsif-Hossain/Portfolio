@@ -1,5 +1,6 @@
 import {
   Component,
+  Fragment,
   lazy,
   Suspense,
   useEffect,
@@ -947,9 +948,9 @@ function About() {
             Care in the details.
           </h2>
           <p>
-            I’m Asif, a final-year CSE student and undergraduate researcher at East West University.
-            I build AI for places where the constraints are real: limited hardware, unreliable
-            internet, and languages that deserve better tools.
+            I’m Asif, an AI engineer and researcher based in Dhaka. I build AI for places where the
+            constraints are real: limited hardware, unreliable internet, and languages that deserve
+            better tools.
           </p>
           <p>
             That means offline agents for Bengali-speaking farmers, document systems that show their
@@ -959,8 +960,8 @@ function About() {
             <GraduationCap size={22} />
             <div>
               <strong>B.Sc. in Computer Science & Engineering</strong>
-              <span>East West University · Expected December 2026</span>
-              <span>Undergraduate research with Dr. Farhana Huq</span>
+              <span>East West University · Class of 2026</span>
+              <span>Research with Dr. Farhana Huq</span>
             </div>
           </div>
           <div className="about-links">
@@ -1162,6 +1163,62 @@ function Contact() {
   );
 }
 
+const intro: { text: string; strong?: boolean; lineBreak?: 'always' | 'desktop' }[] = [
+  { text: 'I’m ' },
+  { text: 'Asif Hossain', strong: true },
+  { text: '. AI engineer. Researcher. Builder. ', lineBreak: 'always' },
+  { text: 'Turning language models into agents that reason, ', lineBreak: 'desktop' },
+  { text: 'use tools, and solve real problems.' },
+];
+const introText = intro.map((part) => part.text).join('');
+
+// The untyped text stays in the layout, hidden, so nothing moves while the intro types itself.
+function HeroIntro() {
+  const reduced = useReducedMotion();
+  const [typed, setTyped] = useState(0);
+  useEffect(() => {
+    if (reduced) return;
+    let count = 0;
+    let timer: ReturnType<typeof setTimeout>;
+    const typeNext = () => {
+      setTyped(++count);
+      if (count < introText.length)
+        timer = setTimeout(typeNext, introText[count - 1] === '.' ? 170 : 20);
+    };
+    timer = setTimeout(typeNext, 700);
+    return () => clearTimeout(timer);
+  }, [reduced]);
+  const shown = reduced ? introText.length : typed;
+  const done = shown === introText.length;
+  let start = 0;
+  return (
+    <p className="hero-description">
+      <span className="sr-only">{introText}</span>
+      <span aria-hidden="true">
+        {intro.map((part) => {
+          const end = start + part.text.length;
+          const visible = part.text.slice(0, Math.max(shown - start, 0));
+          const hasCursor = !reduced && shown >= start && (shown < end || end === introText.length);
+          const Tag = part.strong ? 'strong' : 'span';
+          start = end;
+          return (
+            <Fragment key={part.text}>
+              <Tag>
+                {visible}
+                {hasCursor && <span className={done ? 'typing-cursor done' : 'typing-cursor'} />}
+                <span className="typing-rest">{part.text.slice(visible.length)}</span>
+              </Tag>
+              {part.lineBreak && (
+                <br className={part.lineBreak === 'desktop' ? 'desktop-break' : undefined} />
+              )}
+            </Fragment>
+          );
+        })}
+      </span>
+    </p>
+  );
+}
+
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [paused, setPaused] = useState(false);
@@ -1250,12 +1307,7 @@ export default function App() {
                 <br />
                 And <span className="outlined-word">get things done.</span>
               </h1>
-              <p className="hero-description">
-                I’m <strong>Asif Hossain</strong>. AI engineer. Researcher. Builder.
-                <br />
-                Turning language models into agents that reason,
-                <br className="desktop-break" /> use tools, and solve real problems.
-              </p>
+              <HeroIntro />
               <div className="hero-actions">
                 <a href="#projects" className="button-primary">
                   Explore my work <ArrowUpRight size={17} />

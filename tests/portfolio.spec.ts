@@ -30,6 +30,27 @@ test('production page renders WebGL, images and valid internal anchors', async (
   expect(errors).toEqual([]);
 });
 
+test('hero intro types itself without moving the layout', async ({ page }) => {
+  const untyped = () =>
+    page
+      .locator('.typing-rest')
+      .allTextContents()
+      .then((parts) => parts.join('').length);
+  await page.goto('/');
+  const intro = page.locator('.hero-description');
+  await expect(intro.locator('.sr-only')).toContainText('solve real problems.');
+  const before = await intro.boundingBox();
+  await expect.poll(untyped, { timeout: 15000 }).toBe(0);
+  await expect(intro.getByText('Asif Hossain', { exact: true })).toBeVisible();
+  expect((await intro.boundingBox())!.height).toBe(before!.height);
+
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.reload();
+  await expect(page.locator('h1')).toBeVisible();
+  expect(await untyped()).toBe(0);
+  await expect(page.locator('.typing-cursor')).toHaveCount(0);
+});
+
 test('project filters update the URL and browser history', async ({ page }) => {
   await page.goto('/');
   await page.getByRole('button', { name: 'AI engineering', exact: true }).click();
@@ -190,9 +211,9 @@ test('profile questions offer follow-ups, and contact links carry a subject', as
   await expect(page.locator('.agent-result h4')).toHaveText('Meet Asif.');
   await expect(page.locator('.agent-result')).toContainText('About Asif');
   await expect(page.locator('.follow-ups button')).toHaveCount(3);
-  await page.getByRole('button', { name: 'What’s he studying?' }).click();
+  await page.getByRole('button', { name: 'Where did he study?' }).click();
   await expect(page.locator('.agent-result h4')).toHaveText(
-    'Final-year CSE at East West University.',
+    'Computer science at East West University.',
   );
   await expect(page.getByRole('link', { name: /AI engineering roles/ })).toHaveAttribute(
     'href',

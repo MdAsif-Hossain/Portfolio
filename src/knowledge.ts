@@ -51,9 +51,9 @@ export const KB: Document[] = [
     href: '#about',
     kind: 'profile',
     agentScore: 0,
-    text: 'About Md. Asif Hossain bio background. Final-year CSE student and undergraduate researcher at East West University in Dhaka, Bangladesh. Builds AI where the constraints are real: limited hardware, unreliable internet, and low-resource languages like Bengali. Offline agents for Bengali-speaking farmers, document systems that show their evidence, and research that tests whether an improvement holds up.',
+    text: 'About Md. Asif Hossain bio background. AI engineer and researcher based in Dhaka, Bangladesh. Builds AI where the constraints are real: limited hardware, unreliable internet, and low-resource languages like Bengali. Offline agents for Bengali-speaking farmers, document systems that show their evidence, and research that tests whether an improvement holds up.',
     summary:
-      'Final-year CSE student and undergraduate researcher at East West University in Dhaka, building AI for limited hardware, unreliable internet and low-resource languages.',
+      'AI engineer and researcher based in Dhaka, building AI for limited hardware, unreliable internet and low-resource languages.',
   },
   {
     id: 'skills',
@@ -71,9 +71,9 @@ export const KB: Document[] = [
     href: '#about',
     kind: 'profile',
     agentScore: 0,
-    text: 'Education university degree. B.Sc. in Computer Science and Engineering, CSE, at East West University, expected December 2026. Final-year student doing undergraduate research with Dr. Farhana Huq.',
+    text: 'Education university degree. B.Sc. in Computer Science and Engineering, CSE, at East West University, class of 2026. Research with Dr. Farhana Huq.',
     summary:
-      'B.Sc. in Computer Science & Engineering at East West University, expected December 2026, with undergraduate research under Dr. Farhana Huq.',
+      'B.Sc. in Computer Science & Engineering at East West University, class of 2026, with research under Dr. Farhana Huq.',
   },
   {
     id: 'articleai',
@@ -150,9 +150,8 @@ export const KB: Document[] = [
     href: '#achievements',
     kind: 'achievement',
     agentScore: 0,
-    text: 'Peer reviewer World Wide Web journal Springer Nature reviewer certificate 2026 undergraduate research review.',
-    summary:
-      'Reviewed a manuscript for Springer Nature’s World Wide Web journal as an undergraduate.',
+    text: 'Peer reviewer World Wide Web journal Springer Nature reviewer certificate 2026 research review.',
+    summary: 'Reviewed a manuscript for Springer Nature’s World Wide Web journal.',
   },
   {
     id: 'certs',

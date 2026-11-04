@@ -65,7 +65,7 @@ const routes: Route[] = [
     pattern: /\b(hire|hiring|recruiter|strengths|good fit)\b/i,
     query: 'agentic production tests team lead champion',
     title: 'Engineering depth. Research mindset.',
-    followUps: ['Which skills does he use most?', 'Where does he study?', 'How can I contact him?'],
+    followUps: ['Which skills does he use most?', 'Where did he study?', 'How can I contact him?'],
   },
   {
     intent: 'research',
@@ -109,7 +109,7 @@ const routes: Route[] = [
     pattern:
       /\b(study|studies|studied|studying|university|degree|education|college|graduat\w*|student)\b/i,
     query: 'education university degree cse certifications',
-    title: 'Final-year CSE at East West University.',
+    title: 'Computer science at East West University.',
     tool: 'Read education and certification records',
     kinds: ['profile', 'certification'],
     followUps: [
@@ -121,11 +121,11 @@ const routes: Route[] = [
   {
     intent: 'about',
     pattern: /\b(who is|who's|background|bio|introduce|yourself|about (him|asif|you))\b/i,
-    query: 'about bio student researcher university dhaka',
+    query: 'about bio engineer researcher dhaka',
     title: 'Meet Asif.',
     tool: 'Read the biography and education records',
     kinds: ['profile'],
-    followUps: ['What’s he studying?', 'What has he built?', 'How can I contact him?'],
+    followUps: ['Where did he study?', 'What has he built?', 'How can I contact him?'],
   },
   {
     intent: 'projects',
@@ -166,11 +166,11 @@ const routes: Route[] = [
     title: 'Here’s how to reach him.',
     tool: 'Read the contact record',
     kinds: ['contact'],
-    followUps: ['What has he built?', 'Where does he study?'],
+    followUps: ['What has he built?', 'Where did he study?'],
   },
 ];
 
-const generalFollowUps = ['What has he built?', 'Where does he study?', 'How can I contact him?'];
+const generalFollowUps = ['What has he built?', 'Where did he study?', 'How can I contact him?'];
 const weakFollowUps = [
   'What has he built?',
   'Which skills does he use most?',
