@@ -2,7 +2,7 @@
 
 My personal portfolio: agentic AI, retrieval systems and research, presented as a fast, fully static site hosted on **AWS Amplify**.
 
-**Live site:** [main.d3e5lfymuoo210.amplifyapp.com](https://main.d3e5lfymuoo210.amplifyapp.com/)
+**Live site:** [main.d3e5lfymuoo210.amplifyapp.com](https://main.d3e5lfymuoo210.amplifyapp.com/) on AWS Amplify, and at [asifhossain.me](https://asifhossain.me/)
 
 Built for the AWS Student Builder Challenge: _Build Your Tech Superpower_ (2026).
 
