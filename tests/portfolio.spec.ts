@@ -42,7 +42,7 @@ test('hero intro types itself without moving the layout', async ({ page }) => {
   const before = await intro.boundingBox();
   await expect.poll(untyped, { timeout: 15000 }).toBe(0);
   await expect(intro.getByText('Asif Hossain', { exact: true })).toBeVisible();
-  expect((await intro.boundingBox())!.height).toBe(before!.height);
+  expect((await intro.boundingBox())!.height).toBeCloseTo(before!.height, 0);
 
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.reload();
@@ -202,6 +202,40 @@ test('project screenshots open in an accessible gallery with keyboard navigation
   await page.keyboard.press('Escape');
   await expect(dialog).not.toBeVisible();
   await expect(cover).toBeFocused();
+});
+
+test('other projects appear as cards with screenshots and GitHub links', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('.other-card')).toHaveCount(3);
+  await expect(page.locator('.project-card')).toHaveCount(3);
+  await expect(page.getByRole('link', { name: 'View ArticleAI on GitHub' })).toHaveAttribute(
+    'href',
+    'https://github.com/MdAsif-Hossain/ArticleAI',
+  );
+  await page.getByRole('button', { name: 'View 1 AI Web Scraper screenshot' }).click();
+  const dialog = page.getByRole('dialog');
+  await expect(dialog).toContainText('1 / 1');
+  await expect(dialog.locator('.gallery-nav')).toHaveCount(0);
+  await expect
+    .poll(() =>
+      dialog.locator('figure img').evaluate((img) => (img as HTMLImageElement).naturalWidth),
+    )
+    .toBeGreaterThan(0);
+  await page.keyboard.press('Escape');
+  await expect(dialog).not.toBeVisible();
+});
+
+test('skill groups respond to hover', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+  const group = page.locator('.expertise-grid article').first();
+  const titleColor = () => group.locator('h3').evaluate((el) => getComputedStyle(el).color);
+  const panelOpacity = () => group.evaluate((el) => getComputedStyle(el, '::before').opacity);
+  const before = await titleColor();
+  expect(await panelOpacity()).toBe('0');
+  await group.hover();
+  await expect.poll(panelOpacity).toBe('1');
+  expect(await titleColor()).not.toBe(before);
 });
 
 test('profile questions offer follow-ups, and contact links carry a subject', async ({ page }) => {

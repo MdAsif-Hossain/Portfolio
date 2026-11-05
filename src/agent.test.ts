@@ -36,6 +36,8 @@ test('first questions a visitor asks are answered from profile documents', () =>
     ['Who is Asif?', 'about'],
     ['Where did he study?', 'education'],
     ['How can I contact him?', 'contact'],
+    ['Tell me about the LinkedIn post generator', 'postgen'],
+    ['What is the AI web scraper?', 'scraper'],
   ]) {
     const result = answerQuestion(question);
     assert.equal(result.weak, false, question);

@@ -2,7 +2,7 @@
 
 My personal portfolio: agentic AI, retrieval systems and research, presented as a fast, fully static site hosted on **AWS Amplify**.
 
-**Live site:** _coming soon on AWS Amplify Hosting_
+**Live site:** [main.d3e5lfymuoo210.amplifyapp.com](https://main.d3e5lfymuoo210.amplifyapp.com/)
 
 Built for the AWS Student Builder Challenge: _Build Your Tech Superpower_ (2026).
 
@@ -13,7 +13,7 @@ Built for the AWS Student Builder Challenge: _Build Your Tech Superpower_ (2026)
 | Section      | What you'll find                                                                                 |
 | ------------ | ------------------------------------------------------------------------------------------------ |
 | **Hero**     | Who I am, an interactive 3D "agent core", and quick proof points                                 |
-| **Work**     | AgriBot, Attest and EWU AI Engine, each with real screenshots, metrics and a link to the code    |
+| **Work**     | AgriBot, Attest and EWU AI Engine with real screenshots and metrics, plus three other projects   |
 | **Skills**   | Six groups, from agents and LLMs to data, web and cloud, each tied to the project that proves it |
 | **Ask me**   | The creative feature (below)                                                                     |
 | **Research** | Two accepted IEEE papers, two arXiv preprints and an open model on Hugging Face                  |
@@ -33,7 +33,7 @@ My work is about agents that find evidence before they answer. So instead of onl
 What happens when you ask:
 
 1. **Plan:** the question is routed to a topic (skills, projects, research, education and so on).
-2. **Retrieve:** a BM25 search ranks 18 short documents that describe my projects, papers and background.
+2. **Retrieve:** a BM25 search ranks 20 short documents that describe my projects, papers and background.
 3. **Act:** each topic only cites the kinds of document that fit it. For example, research questions cite papers, not projects.
 4. **Verify:** if the question isn't covered, it says _"I don't have enough evidence for that"_ instead of guessing.
 5. **Respond:** an answer built from the cited sources, plus follow-up questions to ask next.

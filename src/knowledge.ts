@@ -86,6 +86,26 @@ export const KB: Document[] = [
       'Agentic workflow: FastAPI hands work to n8n, which runs Llama 3.3 70B on Groq, logs to Google Sheets and emails reports.',
   },
   {
+    id: 'scraper',
+    title: 'AI Web Scraper',
+    href: 'https://github.com/MdAsif-Hossain/AI-web-Scraper',
+    kind: 'project',
+    agentScore: 3,
+    text: 'AI Web Scraper LLM powered scraping Selenium BeautifulSoup Streamlit LangChain Ollama local Llama 3 chunking structured extraction messy webpages listings tables.',
+    summary:
+      'Selenium reads a page and a local Llama 3 model extracts only what you describe, turning messy listings into structured output.',
+  },
+  {
+    id: 'postgen',
+    title: 'LinkedIn Post Generator',
+    href: 'https://github.com/MdAsif-Hossain/LinkedIn-post-generator',
+    kind: 'project',
+    agentScore: 4,
+    text: 'LinkedIn Post Generator AI agent LangChain LCEL Streamlit Groq OpenAI multilingual 10 languages Bengali five tone presets post history temperature control.',
+    summary:
+      'An AI agent that writes LinkedIn posts in 10+ languages and five tones, built with LangChain LCEL on Groq or OpenAI.',
+  },
+  {
     id: 't5',
     title: 'AgriBanglaT5',
     href: '#p-t5',

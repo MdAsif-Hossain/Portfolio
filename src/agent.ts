@@ -161,7 +161,7 @@ const routes: Route[] = [
   },
   {
     intent: 'contact',
-    pattern: /\b(contact|email|reach|touch|linkedin)\b/i,
+    pattern: /\b(contact|email|reach|touch|linkedin(?! post))\b/i,
     query: 'contact email linkedin github',
     title: 'Here’s how to reach him.',
     tool: 'Read the contact record',

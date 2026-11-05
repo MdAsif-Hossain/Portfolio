@@ -468,14 +468,72 @@ const projects = [
     ],
   },
 ] as const;
-type Project = (typeof projects)[number];
+
+const otherProjects = [
+  {
+    id: 'articleai',
+    title: 'ArticleAI',
+    description:
+      'Paste an article URL and an n8n workflow does the rest: scrape it, summarize it with Llama 3.3 on Groq, log it to Google Sheets and email a report.',
+    tags: ['FastAPI', 'n8n', 'Groq'],
+    href: `${github}/ArticleAI`,
+    badge: 'Workflow automation',
+    shots: [
+      {
+        src: 'articleai-home.webp',
+        caption: 'Paste a URL and an email address, and the summary and insights arrive by email.',
+      },
+      {
+        src: 'articleai-workflow.webp',
+        caption:
+          'The n8n workflow: scrape, summarize and find insights, then log to Google Sheets and send the email.',
+      },
+    ],
+  },
+  {
+    id: 'scraper',
+    title: 'AI Web Scraper',
+    description:
+      'Describe what you want from a page. Selenium reads it, and a local Llama 3 model pulls out only that, even from messy listings.',
+    tags: ['Selenium', 'LangChain', 'Ollama'],
+    href: `${github}/AI-web-Scraper`,
+    badge: 'Structured extraction',
+    shots: [
+      {
+        src: 'scraper-output.webp',
+        caption: 'Property listings turned into a clean table from one plain-English instruction.',
+      },
+    ],
+  },
+  {
+    id: 'postgen',
+    title: 'LinkedIn Post Generator',
+    description:
+      'An AI agent that writes LinkedIn posts in 10+ languages and five tones, built with LangChain LCEL on Groq or OpenAI.',
+    tags: ['LangChain', 'Streamlit', 'Groq'],
+    href: `${github}/LinkedIn-post-generator`,
+    badge: 'LLM applications',
+    shots: [
+      {
+        src: 'postgen-app.webp',
+        caption: 'Choose a language, length, tone and topic, and the agent writes the post.',
+      },
+    ],
+  },
+];
+
+type GalleryProject = {
+  title: string;
+  href: string;
+  shots: readonly { src: string; caption: string }[];
+};
 
 function ProjectGallery({
   gallery,
   onChange,
 }: {
-  gallery: { project: Project; index: number } | null;
-  onChange: (gallery: { project: Project; index: number } | null) => void;
+  gallery: { project: GalleryProject; index: number } | null;
+  onChange: (gallery: { project: GalleryProject; index: number } | null) => void;
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const open = gallery !== null;
@@ -532,26 +590,28 @@ function ProjectGallery({
             />
             <figcaption aria-live="polite">{shot.caption}</figcaption>
           </figure>
-          <div className="gallery-nav">
-            <button onClick={() => show(gallery.index - 1)} aria-label="Previous screenshot">
-              <ChevronLeft size={18} />
-            </button>
-            <div className="gallery-thumbs">
-              {shots.map((item, i) => (
-                <button
-                  key={item.src}
-                  onClick={() => show(i)}
-                  aria-label={`Screenshot ${i + 1} of ${shots.length}`}
-                  aria-current={i === gallery.index}
-                >
-                  <img src={asset(`projects/${item.src}`)} alt="" loading="lazy" />
-                </button>
-              ))}
+          {shots.length > 1 && (
+            <div className="gallery-nav">
+              <button onClick={() => show(gallery.index - 1)} aria-label="Previous screenshot">
+                <ChevronLeft size={18} />
+              </button>
+              <div className="gallery-thumbs">
+                {shots.map((item, i) => (
+                  <button
+                    key={item.src}
+                    onClick={() => show(i)}
+                    aria-label={`Screenshot ${i + 1} of ${shots.length}`}
+                    aria-current={i === gallery.index}
+                  >
+                    <img src={asset(`projects/${item.src}`)} alt="" loading="lazy" />
+                  </button>
+                ))}
+              </div>
+              <button onClick={() => show(gallery.index + 1)} aria-label="Next screenshot">
+                <ChevronRight size={18} />
+              </button>
             </div>
-            <button onClick={() => show(gallery.index + 1)} aria-label="Next screenshot">
-              <ChevronRight size={18} />
-            </button>
-          </div>
+          )}
           <External href={gallery.project.href}>View the code on GitHub</External>
         </>
       )}
@@ -562,7 +622,7 @@ function ProjectGallery({
 function Projects() {
   const initialFilter = () => new URLSearchParams(window.location.search).get('work') || 'All work';
   const [filter, setFilter] = useState(initialFilter);
-  const [gallery, setGallery] = useState<{ project: Project; index: number } | null>(null);
+  const [gallery, setGallery] = useState<{ project: GalleryProject; index: number } | null>(null);
   useEffect(() => {
     const update = () => setFilter(initialFilter());
     const revealProject = () => {
@@ -685,17 +745,51 @@ function Projects() {
         portfolio.
       </p>
       <ProjectGallery gallery={gallery} onChange={setGallery} />
-      <div className="more-builds">
-        <span>Also on the workbench</span>
-        <External href={`${github}/ArticleAI`}>
-          ArticleAI <small>Workflow automation</small>
-        </External>
-        <External href={`${github}/AI-web-Scraper`}>
-          AI Web Scraper <small>Structured extraction</small>
-        </External>
-        <External href={`${github}/LinkedIn-post-generator`}>
-          Post Generator <small>LLM applications</small>
-        </External>
+      <div className="other-projects">
+        <h3>Other projects</h3>
+        <div className="other-grid">
+          {otherProjects.map((p) => (
+            <article key={p.id} id={`p-${p.id}`} className="other-card">
+              <button
+                type="button"
+                className="project-art project-cover other-cover"
+                onClick={() => setGallery({ project: p, index: 0 })}
+                aria-label={`View ${p.shots.length} ${p.title} ${p.shots.length === 1 ? 'screenshot' : 'screenshots'}`}
+              >
+                <img
+                  src={asset(`projects/${p.id}-cover.webp`)}
+                  alt=""
+                  width={900}
+                  height={515}
+                  loading="lazy"
+                />
+                <span className="art-caption">{p.badge}</span>
+                <span className="shot-count">
+                  <Images size={12} /> {p.shots.length}
+                </span>
+              </button>
+              <div className="other-info">
+                <div className="project-title">
+                  <h4>{p.title}</h4>
+                  <a
+                    href={p.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`View ${p.title} on GitHub`}
+                  >
+                    <ArrowUpRight size={19} />
+                  </a>
+                </div>
+                <p>{p.description}</p>
+                <div className="tags">
+                  {p.tags.map((t) => (
+                    <span key={t}>{t}</span>
+                  ))}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -1171,6 +1265,11 @@ const intro: { text: string; strong?: boolean; lineBreak?: 'always' | 'desktop' 
   { text: 'use tools, and solve real problems.' },
 ];
 const introText = intro.map((part) => part.text).join('');
+// When each character appears, in ms. Tied to the clock so a busy page can't slow the typing down.
+let introTime = 700;
+const introSchedule = [...introText].map(
+  (_, i) => (introTime += introText[i - 1] === '.' ? 170 : 20),
+);
 
 // The untyped text stays in the layout, hidden, so nothing moves while the intro types itself.
 function HeroIntro() {
@@ -1178,15 +1277,13 @@ function HeroIntro() {
   const [typed, setTyped] = useState(0);
   useEffect(() => {
     if (reduced) return;
-    let count = 0;
-    let timer: ReturnType<typeof setTimeout>;
-    const typeNext = () => {
-      setTyped(++count);
-      if (count < introText.length)
-        timer = setTimeout(typeNext, introText[count - 1] === '.' ? 170 : 20);
-    };
-    timer = setTimeout(typeNext, 700);
-    return () => clearTimeout(timer);
+    const startedAt = performance.now();
+    let frame = requestAnimationFrame(function type(now) {
+      const next = introSchedule.findIndex((time) => time > now - startedAt);
+      setTyped(next === -1 ? introText.length : next);
+      if (next !== -1) frame = requestAnimationFrame(type);
+    });
+    return () => cancelAnimationFrame(frame);
   }, [reduced]);
   const shown = reduced ? introText.length : typed;
   const done = shown === introText.length;
