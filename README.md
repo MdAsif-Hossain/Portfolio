@@ -104,8 +104,6 @@ tests/             browser tests
 docs/              images used in this README
 ```
 
-When you change a project or skill, update both [`App.tsx`](src/App.tsx) and [`knowledge.ts`](src/knowledge.ts) so the page and Ask me stay consistent.
-
 ## Contact
 
 [Email](mailto:asifhossain8612@gmail.com) · [LinkedIn](https://www.linkedin.com/in/md-asif-hossain20/) · [GitHub](https://github.com/MdAsif-Hossain) · [Hugging Face](https://huggingface.co/Sabuktagin)
