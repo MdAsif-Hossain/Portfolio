@@ -1675,7 +1675,7 @@ section,
 }
 .recognition {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   padding: 28px 0;
   border-block: 1px solid var(--line);
   gap: 22px;
@@ -2411,7 +2411,6 @@ section,
     font-size: 10px;
   }
   .recognition {
-    grid-template-columns: 1fr 1fr;
     gap: 28px;
   }
   .certifications {
@@ -2904,6 +2903,7 @@ section,
     object-position: center 28%;
   }
   .recognition {
+    grid-template-columns: 1fr;
     margin-top: 32px;
     gap: 27px 20px;
   }

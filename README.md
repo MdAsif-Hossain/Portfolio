@@ -33,7 +33,7 @@ My work is about agents that find evidence before they answer. So instead of onl
 What happens when you ask:
 
 1. **Plan:** the question is routed to a topic (skills, projects, research, education and so on).
-2. **Retrieve:** a BM25 search ranks 20 short documents that describe my projects, papers and background.
+2. **Retrieve:** a BM25 search ranks 19 short documents that describe my projects, papers and background.
 3. **Act:** each topic only cites the kinds of document that fit it. For example, research questions cite papers, not projects.
 4. **Verify:** if the question isn't covered, it says _"I don't have enough evidence for that"_ instead of guessing.
 5. **Respond:** an answer built from the cited sources, plus follow-up questions to ask next.

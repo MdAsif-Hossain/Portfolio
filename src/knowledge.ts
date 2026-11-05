@@ -184,16 +184,6 @@ export const KB: Document[] = [
       'AI Engineering Bootcamp (Ostad), Machine Learning Specialization (DeepLearning.AI and Stanford), Google Data Analytics, ITEE IT Passport.',
   },
   {
-    id: 'gci',
-    title: 'GCI World 2026',
-    href: '#achievements',
-    kind: 'achievement',
-    agentScore: 0,
-    text: 'GCI World 2026 data science program Matsuo-Iwasawa Laboratory University of Tokyo selected.',
-    summary:
-      'Selected for GCI World 2026, the University of Tokyo’s Matsuo-Iwasawa Lab data science program.',
-  },
-  {
     id: 'site',
     title: 'This portfolio on AWS',
     href: '#top',

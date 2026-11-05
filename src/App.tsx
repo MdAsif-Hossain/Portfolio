@@ -1091,11 +1091,6 @@ function About() {
           <span>World Wide Web journal · 2026</span>
         </div>
         <div>
-          <GraduationCap size={21} />
-          <strong>GCI World 2026</strong>
-          <span>Selected · University of Tokyo program</span>
-        </div>
-        <div>
           <Code2 size={21} />
           <strong>75 / 550+ teams</strong>
           <span>Kaggle agentic legal retrieval · 2026</span>
