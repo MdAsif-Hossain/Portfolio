@@ -674,6 +674,9 @@ section,
   font-weight: 600;
   font-size: 13px;
   white-space: nowrap;
+  transition:
+    color 0.2s,
+    opacity 0.2s;
 }
 /* Each logo sits on a faint tile of its own brand colour, lifted a little so dark blues stay visible. */
 .stack-logo {
@@ -687,10 +690,33 @@ section,
   background: color-mix(in srgb, var(--brand) 13%, transparent);
   border: 1px solid color-mix(in srgb, var(--brand) 30%, transparent);
   box-shadow: 0 0 20px -6px color-mix(in srgb, var(--brand) 50%, transparent);
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    box-shadow 0.2s,
+    transform 0.2s;
 }
 .stack-logo svg {
   width: 16px;
   height: 16px;
+  transition: transform 0.2s;
+}
+@media (hover: hover) {
+  .stack-strip > div:has(> span:hover) > span:not(:hover) {
+    opacity: 0.55;
+  }
+  .stack-strip > div > span:hover {
+    color: color-mix(in srgb, var(--brand) 55%, #fff);
+  }
+  .stack-strip > div > span:hover .stack-logo {
+    background: color-mix(in srgb, var(--brand) 26%, transparent);
+    border-color: color-mix(in srgb, var(--brand) 70%, transparent);
+    box-shadow: 0 6px 22px -4px color-mix(in srgb, var(--brand) 75%, transparent);
+    transform: translateY(-3px);
+  }
+  .stack-strip > div > span:hover .stack-logo svg {
+    transform: scale(1.12);
+  }
 }
 
 /* Project case studies and native vector artwork. */
@@ -3032,8 +3058,12 @@ section,
     transition-duration: 0.01ms !important;
   }
   .project-card:hover,
+  .other-card:hover,
   .button-primary:hover,
-  .contact-arrow:hover {
+  .contact-arrow:hover,
+  .expertise-grid article:hover .skill-icon,
+  .stack-strip > div > span:hover .stack-logo,
+  .stack-strip > div > span:hover .stack-logo svg {
     transform: none;
   }
 }

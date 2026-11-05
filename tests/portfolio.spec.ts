@@ -240,6 +240,25 @@ test('other projects appear as cards with screenshots and GitHub links', async (
   await expect(dialog).not.toBeVisible();
 });
 
+test('stack logos respond to hover and stay still with reduced motion', async ({ page }) => {
+  await page.goto('/');
+  const items = page.locator('.stack-strip > div > span');
+  const logo = items.first().locator('.stack-logo');
+  const lift = () => logo.evaluate((el) => getComputedStyle(el).transform);
+  const dim = () => items.nth(1).evaluate((el) => getComputedStyle(el).opacity);
+  expect(await lift()).toBe('none');
+  await items.first().hover();
+  await expect.poll(lift).not.toBe('none');
+  await expect.poll(dim).toBe('0.55');
+  await page.mouse.move(0, 0);
+  await expect.poll(dim).toBe('1');
+
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await items.first().hover();
+  await expect.poll(dim).toBe('0.55');
+  expect(await lift()).toBe('none');
+});
+
 test('skill groups respond to hover', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
