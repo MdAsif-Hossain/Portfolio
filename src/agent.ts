@@ -81,6 +81,16 @@ const routes: Route[] = [
     ],
   },
   {
+    intent: 'achievements',
+    pattern:
+      /\b(achievements?|accomplish\w*|awards?|recognition|honou?rs?|prizes?|won|wins?|winner|champion\w*|hackathons?|competitions?)\b/i,
+    query: 'champion first place hackathon kaggle rank peer reviewer springer',
+    title: 'Results with evidence behind them.',
+    tool: 'Read the achievement and competition records',
+    kinds: ['project', 'achievement'],
+    followUps: ['What research has he published?', 'What has he built?', 'How can I contact him?'],
+  },
+  {
     intent: 'agents',
     pattern: /\b(agentic|agents?|langgraph)\b/i,
     query: 'agentic langgraph routing workflow',

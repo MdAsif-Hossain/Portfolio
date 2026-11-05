@@ -47,6 +47,12 @@ test('first questions a visitor asks are answered from profile documents', () =>
     );
   }
 });
+test('achievement questions cite the hackathon, Kaggle and reviewer records', () => {
+  for (const question of ['What are his achievements?', 'Has he won anything?']) {
+    const ids = answerQuestion(question).sources.map((source) => source.id);
+    assert.deepEqual([...ids].sort(), ['ewu', 'kaggle', 'reviewer'], question);
+  }
+});
 test('follow-up suggestions lead to answers, not dead ends', () => {
   const asked = new Set<string>();
   const queue = [...answerQuestion('Why hire Asif?').followUps];
