@@ -8,8 +8,7 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview --host 0.0.0.0",
     "test": "node --import tsx --test src/agent.test.ts",
-    "test:e2e": "npm run build && playwright test",
-    "capture": "node scripts/capture.mjs"
+    "test:e2e": "npm run build && playwright test"
   },
   "dependencies": {
     "@fontsource-variable/manrope": "^5.2.0",
