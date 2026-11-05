@@ -100,6 +100,21 @@ test('certificate modal supports Escape and restores focus', async ({ page }) =>
   await expect(certificate).toBeFocused();
 });
 
+test('the portrait reviewer certificate fits on screen', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('button', { name: /Springer Nature Reviewer/ }).click();
+  const image = page.getByAltText('Springer Nature Reviewer certificate for Md. Asif Hossain');
+  await expect(image).toBeVisible();
+  await expect
+    .poll(() => image.evaluate((img) => (img as HTMLImageElement).naturalHeight))
+    .toBeGreaterThan(0);
+  const box = await image.evaluate((img) => img.getBoundingClientRect().toJSON());
+  expect(box.height / box.width).toBeCloseTo(1273 / 900, 1);
+  expect(box.bottom).toBeLessThanOrEqual(page.viewportSize()!.height);
+  await page.keyboard.press('Escape');
+  await expect(page.getByRole('dialog')).not.toBeVisible();
+});
+
 test('loading feedback and email copy work without a backend', async ({ page, context }) => {
   const apiCalls: string[] = [];
   page.on('request', (request) => {

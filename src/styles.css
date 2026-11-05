@@ -1700,7 +1700,7 @@ section,
 }
 .certifications {
   display: grid;
-  grid-template-columns: 0.7fr 1fr 1fr 1fr;
+  grid-template-columns: 0.7fr repeat(4, 1fr);
   gap: 24px;
   padding-top: 31px;
 }
@@ -1771,6 +1771,14 @@ section,
   width: 100%;
   height: auto;
   border-radius: 3px;
+}
+/* Portrait and landscape certificates both fit on screen without scrolling. */
+.certificate-dialog > img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: 72dvh;
+  margin-inline: auto;
 }
 .certificate-dialog > a {
   display: inline-flex;
@@ -2029,6 +2037,16 @@ section,
   }
 }
 @media (max-width: 1100px) {
+  .certifications {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .cert-heading,
+  .additional-cert {
+    grid-column: 1 / -1;
+  }
+  .additional-cert {
+    padding-left: 0;
+  }
   .header-inner {
     padding-inline: 32px;
   }

@@ -987,7 +987,18 @@ function Research() {
 }
 
 const certificates = [
-  { title: 'AI Engineering Bootcamp', issuer: 'Ostad · 2026', image: 'cert-ostad.jpg', href: null },
+  {
+    title: 'Springer Nature Reviewer',
+    issuer: 'World Wide Web journal · October 2026',
+    image: 'cert-reviewer.jpg',
+    href: null,
+  },
+  {
+    title: 'AI Engineering Bootcamp',
+    issuer: 'Ostad · 2026 · ID C46932',
+    image: 'cert-ostad.jpg',
+    href: null,
+  },
   {
     title: 'Machine Learning Specialization',
     issuer: 'Stanford Online & DeepLearning.AI · 2025',
