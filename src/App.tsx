@@ -413,7 +413,7 @@ const projects = [
     description:
       'An invoice extraction pipeline with source-linked fields, deterministic validation, and human review when the model isn’t sure.',
     metric: '97.2%',
-    metricLabel: 'field accuracy¹',
+    metricLabel: 'accuracy on 211 fields',
     second: '276',
     secondLabel: 'automated tests',
     tags: ['FastAPI', 'PostgreSQL', 'React'],
@@ -740,10 +740,6 @@ function Projects() {
             </motion.article>
           ))}
       </div>
-      <p className="metric-note">
-        ¹ Attest: 211 evaluated fields. Metrics reflect the project evaluations documented in this
-        portfolio.
-      </p>
       <ProjectGallery gallery={gallery} onChange={setGallery} />
       <div className="other-projects">
         <h3>Other projects</h3>

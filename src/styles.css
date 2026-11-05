@@ -993,11 +993,6 @@ section,
   color: #84939e;
   margin-top: 15px;
 }
-.metric-note {
-  font-size: 9px;
-  color: #7e8e99;
-  margin-top: 13px;
-}
 .other-projects {
   margin-top: 46px;
 }
@@ -2757,9 +2752,6 @@ section,
   .art-caption {
     font-size: 9px;
   }
-  .metric-note {
-    font-size: 8px;
-  }
   .expertise-grid {
     gap: 32px 0;
   }
@@ -3097,8 +3089,7 @@ section,
   }
   .project-role,
   .tags > span,
-  .project-metrics span,
-  .metric-note {
+  .project-metrics span {
     font-size: 10px;
   }
   .expertise-grid p {

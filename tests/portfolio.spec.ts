@@ -223,6 +223,8 @@ test('other projects appear as cards with screenshots and GitHub links', async (
   await page.goto('/');
   await expect(page.locator('.other-card')).toHaveCount(3);
   await expect(page.locator('.project-card')).toHaveCount(3);
+  const chip = (await page.locator('.tags > span').first().boundingBox())!;
+  expect(chip.height).toBeLessThan(30);
   await expect(page.getByRole('link', { name: 'View ArticleAI on GitHub' })).toHaveAttribute(
     'href',
     'https://github.com/MdAsif-Hossain/ArticleAI',
